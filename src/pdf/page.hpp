@@ -1,0 +1,5 @@
+namespace pdf {
+	class page {
+
+	};
+}
