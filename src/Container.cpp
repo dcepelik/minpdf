@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Container.hpp"
+#include "Box.hpp"
 
 using namespace std;
 
@@ -13,9 +14,11 @@ Container::Container(string name) : Element(name)
 
 
 void
-Container::expand()
+Container::expand(vector<shared_ptr<Box>> &boxes)
 {
-	
+	for (auto it = children.begin(); it != children.end(); it++) {
+		(*it)->expand(boxes);
+	}
 }
 
 

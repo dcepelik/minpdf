@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 
+#include "Box.hpp"
 #include "Element.hpp"
 
 using namespace std;
@@ -16,7 +17,7 @@ public:
 	vector<shared_ptr<Element>> children;
 
 	Container(string name);
-	void expand();
+	void expand(vector<shared_ptr<Box>> &boxes);
 	virtual void dump(int level = 0);
 	virtual void removeEmptyChildren();
 	virtual bool empty();

@@ -4,8 +4,13 @@
 #include <vector>
 
 #include "Parser.hpp"
+#include "PDF/Document.hpp"
+#include "PDF/Objects/Dictionary.hpp"
+#include "PDF/Objects/Array.hpp"
+#include "PDF/Objects/Object.hpp"
 
 using namespace std;
+using namespace PDF::Objects;
 
 
 void
@@ -34,9 +39,21 @@ main(int argc, char *argv[]) {
 
 	istream stream(&buf);
 	Parser p(stream);
-	p.parseDocument();
+	shared_ptr<Element> doc = p.parseDocument();
+
+	vector<shared_ptr<Box>> boxes;
+	doc->expand(boxes);
+
+	for (auto it = boxes.begin(); it != boxes.end(); it++) {
+		//(*it)->dump();
+	}
+	cout << endl;
 
 	buf.close();
+
+	auto arr = new Dictionary();
+	arr->addItem("Srot", shared_ptr<Object>(new Array()));
+	cout << (*arr);
 
 	return EXIT_SUCCESS;
 }

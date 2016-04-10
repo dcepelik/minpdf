@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "Element.hpp"
+
 
 using namespace std;
 
@@ -12,6 +14,7 @@ class TextNode : public Element
 
 public:
 	TextNode(string text);
-	void dump(int level = 0);
+	virtual void expand(vector<shared_ptr<Box>> &boxes);
+	virtual void dump(int level = 0);
 	virtual bool empty();
 };

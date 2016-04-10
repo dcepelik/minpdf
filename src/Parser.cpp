@@ -24,7 +24,6 @@ Parser::parseDocument()
 	parseChildren(doc->children);
 
 	doc->removeEmptyChildren();
-	doc->dump();
 
 	return unique_ptr<Document>(doc);
 }

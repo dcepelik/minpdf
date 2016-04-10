@@ -2,6 +2,7 @@
 #include <string>
 
 #include "Element.hpp"
+#include "Box.hpp"
 
 using namespace std;
 
@@ -13,9 +14,10 @@ Element::Element(string name)
 
 
 void
-Element::expand()
+Element::expand(vector<shared_ptr<Box>> &boxes)
 {
 	/* by default, element will not produce any boxes */
+	(void)boxes;
 }
 
 
