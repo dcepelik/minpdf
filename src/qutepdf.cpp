@@ -10,6 +10,7 @@
 #include "PDF/Objects/Object.hpp"
 
 using namespace std;
+using namespace PDF;
 using namespace PDF::Objects;
 
 
@@ -27,15 +28,18 @@ main(int argc, char *argv[]) {
 		return EXIT_FAILURE;
 	}
 
-	string infile = argv[1];
-	string outfile = argv[2];
+	string input_fn = argv[1];
+	string output_fn = argv[2];
 
 	filebuf buf;
-	if (!buf.open(infile, ios::in)) {
-		cerr << "Cannot open file '" << infile << "' for reading"
+	if (!buf.open(input_fn, ios::in)) {
+		cerr << "Cannot open file '" << input_fn << "' for reading"
 			<< endl;
 		return EXIT_FAILURE;
 	}
+
+	ofstream ofs;
+	ofs.open(output_fn, ofstream::out);
 
 	istream stream(&buf);
 	Parser p(stream);
@@ -44,16 +48,21 @@ main(int argc, char *argv[]) {
 	vector<shared_ptr<Box>> boxes;
 	doc->expand(boxes);
 
+	/* -b switch
 	for (auto it = boxes.begin(); it != boxes.end(); it++) {
-		//(*it)->dump();
+		(*it)->dump();
 	}
 	cout << endl;
+	*/
 
 	buf.close();
 
-	auto arr = new Dictionary();
-	arr->addItem("Srot", shared_ptr<Object>(new Array()));
-	cout << (*arr);
+	PDF::Document *pdfDoc = new PDF::Document();
+	Page *page = new Page("BT\r\n/F1 24 Tf\r\n100 100 Td\r\n\r\n( Hello World ) Tj");
+
+	pdfDoc->addPage(shared_ptr<Page>(page));
+
+	pdfDoc->print(ofs);
 
 	return EXIT_SUCCESS;
 }

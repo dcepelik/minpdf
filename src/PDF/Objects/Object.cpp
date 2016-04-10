@@ -1,10 +1,20 @@
 #include "Object.hpp"
 
 
+int PDF::Objects::Object::counter = 0;
+
+
 void
 PDF::Objects::Object::print(ostream &out) const
 {
 	printInternal(out);
+}
+
+
+int
+PDF::Objects::Object::objectCount()
+{
+	return PDF::Objects::Object::counter;
 }
 
 

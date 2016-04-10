@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Object.hpp"
+#include "Name.hpp"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ namespace PDF
 
 		public:
 			void addItem(string key, shared_ptr<Object> value);
+			void addItem(string key, Object *value);
 		};
 	}
 }

@@ -13,5 +13,5 @@ Reference::Reference(int id, int revision)
 void
 Reference::printInternal(ostream &out) const
 {
-	out << id << " " << revision << " R";
+	out << id << " " << revision << " R" << endl;
 }

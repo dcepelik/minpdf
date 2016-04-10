@@ -13,7 +13,12 @@ namespace PDF
 		{
 			virtual void printInternal(ostream& out) const = 0;
 
+			/* @see http://stackoverflow.com/questions/9702053 */
+			static int counter;
+
 		public:
+			static int objectCount();
+
 			void print(ostream& out) const;
 		};
 	}
