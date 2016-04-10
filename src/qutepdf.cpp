@@ -4,14 +4,9 @@
 #include <vector>
 
 #include "Parser.hpp"
-#include "PDF/Document.hpp"
-#include "PDF/Objects/Dictionary.hpp"
-#include "PDF/Objects/Array.hpp"
-#include "PDF/Objects/Object.hpp"
+#include "Renderer.hpp"
 
 using namespace std;
-using namespace PDF;
-using namespace PDF::Objects;
 
 
 void
@@ -41,28 +36,20 @@ main(int argc, char *argv[]) {
 	ofstream ofs;
 	ofs.open(output_fn, ofstream::out);
 
+	/* @todo ofs? */
+
 	istream stream(&buf);
 	Parser p(stream);
 	shared_ptr<Element> doc = p.parseDocument();
 
-	vector<shared_ptr<Box>> boxes;
-	doc->expand(boxes);
-
-	/* -b switch
-	for (auto it = boxes.begin(); it != boxes.end(); it++) {
-		(*it)->dump();
-	}
-	cout << endl;
-	*/
-
 	buf.close();
 
-	PDF::Document *pdfDoc = new PDF::Document();
-	Page *page = new Page("BT\r\n/F1 24 Tf\r\n100 100 Td\r\n\r\n(Budiz pozdraven, svete!) Tj");
-
-	pdfDoc->addPage(shared_ptr<Page>(page));
+	Renderer *renderer = new Renderer();
+	shared_ptr<PDF::Document> pdfDoc = renderer->render(doc);
 
 	pdfDoc->print(ofs);
+
+	cout << "Done." << endl;
 
 	return EXIT_SUCCESS;
 }

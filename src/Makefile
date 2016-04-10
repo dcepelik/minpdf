@@ -8,7 +8,8 @@ OBJS=qutepdf.o Element.o Container.o Document.o TextNode.o Paragraph.o\
 	Parser.o Box.o Char.o Penalty.o HorizontalGlue.o PDF/Document.o\
 	PDF/Page.o PDF/Objects/Object.o PDF/Objects/Array.o PDF/Objects/Name.o\
 	PDF/Objects/Dictionary.o PDF/Objects/Literal.o PDF/Objects/Reference.o\
-	PDF/Objects/IndirectObject.o PDF/Objects/Stream.o PDF/Objects/Number.o
+	PDF/Objects/IndirectObject.o PDF/Objects/Stream.o PDF/Objects/Number.o\
+	Renderer.o
 
 ${PROG}: ${OBJS}
 	${CC} ${LDFLAGS} -o ${PROG} $^

@@ -2,6 +2,8 @@
 
 #include "Box.hpp"
 
+using namespace std;
+
 
 class Char : public Box
 {
@@ -9,5 +11,8 @@ class Char : public Box
 
 public:
 	Char(char c);
+	virtual int getStretchability();
+	virtual int getWidth();
 	virtual void dump();
+	virtual void print(ostream &out) const;
 };

@@ -8,6 +8,8 @@ using namespace PDF::Objects;
 
 Document::Document()
 {
+	pageRefs = shared_ptr<Array>(new Array());
+	fonts = shared_ptr<Dictionary>(new Dictionary());
 }
 
 
@@ -18,18 +20,18 @@ Document::preparePDFObjects()
 	catalog.wrapped()->addItem("Pages", pageCatalog.getRef());
 
 	pageCatalog.wrapped()->addItem("Type", new Name("Pages"));
-	pageCatalog.wrapped()->addItem("Kids", &pageRefs);
+	pageCatalog.wrapped()->addItem("Kids", pageRefs);
 	pageCatalog.wrapped()->addItem("Count", new Number(pages.size()));
 
 	trailer.addItem("Root", catalog.getRef());
 	trailer.addItem("Size", new Number(Object::objectCount() + 1));
 
-	fonts.addItem("F1", helveticaFont.getRef());
+	fonts->addItem("F1", helveticaFont.getRef());
 
 	helveticaFont.wrapped()->addItem("Type", new Name("Font"));
 	helveticaFont.wrapped()->addItem("Subtype", new Name("Type1"));
 	helveticaFont.wrapped()->addItem("Name", new Name("F1"));
-	helveticaFont.wrapped()->addItem("BaseFont", new Name("Helvetica"));
+	helveticaFont.wrapped()->addItem("BaseFont", new Name("Courier"));
 	helveticaFont.wrapped()->addItem("Encoding", new Name("MacRomanEncoding"));
 }
 
@@ -40,7 +42,7 @@ Document::addPage(shared_ptr<Page> page)
 	pages.push_back(page);
 
 	Dictionary *pageResources = new Dictionary();
-	pageResources->addItem("Font", shared_ptr<Object>(&fonts));
+	pageResources->addItem("Font", fonts);
 
 	/* page content-stream */
 	auto pageStream = new IndirectObject<Stream>(
@@ -54,12 +56,12 @@ Document::addPage(shared_ptr<Page> page)
 	pageDef->wrapped()->addItem("Parent", pageCatalog.getRef());
 	pageDef->wrapped()->addItem("MediaBox", new Literal("[0 0 612 792]"));
 	pageDef->wrapped()->addItem("Contents", pageStream->getRef());
-	pageDef->wrapped()->addItem("Resources",
-		shared_ptr<Object>(pageResources));
+	pageDef->wrapped()->addItem("Resources", shared_ptr<Object>(pageResources));
+
 	pageDefs.push_back(shared_ptr<IndirectObject<Dictionary>>(pageDef));
 
 
-	pageRefs.addChild(pageDef->getRef());
+	pageRefs->addChild(pageDef->getRef());
 }
 
 

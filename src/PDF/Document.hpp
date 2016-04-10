@@ -28,11 +28,11 @@ namespace PDF
 		IndirectObject<Dictionary> pageCatalog;
 		vector<shared_ptr<IndirectObject<Dictionary>>> pageDefs;
 		vector<shared_ptr<IndirectObject<Stream>>> pageStreams;
-		Array pageRefs;
+		shared_ptr<Array> pageRefs;
 		Dictionary trailer;
 
 		IndirectObject<Dictionary> helveticaFont;
-		Dictionary fonts;
+		shared_ptr<Dictionary> fonts;
 
 		void preparePDFObjects();
 		void printObjAndPushXref(ostream &out, Object &obj,

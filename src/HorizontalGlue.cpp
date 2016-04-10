@@ -10,3 +10,25 @@ HorizontalGlue::dump()
 {
 	cout << "#HGlue#";
 }
+
+
+void
+HorizontalGlue::print(ostream &out) const
+{
+	(void)out;
+	/* do whatever */
+}
+
+
+int
+HorizontalGlue::getWidth()
+{
+	return 20;
+}
+
+
+int
+HorizontalGlue::getStretchability()
+{
+	return 1000;
+}
