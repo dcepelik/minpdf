@@ -13,5 +13,5 @@ Name::Name(string name)
 void
 Name::printInternal(ostream &out) const
 {
-	out << "/" << name << endl;
+	out << "/" << name << "\r\n";
 }

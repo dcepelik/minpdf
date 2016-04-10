@@ -7,13 +7,13 @@ using namespace std;
 void
 Array::printInternal(ostream &out) const
 {
-	out << "[" << endl;
+	out << "[" << "\r\n";
 	
 	for (auto it = children.begin(); it != children.end(); it++) {
 		(*it)->print(out);
 	}
 
-	out << "]" << endl;
+	out << "]" << "\r\n";
 }
 
 

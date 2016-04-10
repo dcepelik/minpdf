@@ -58,7 +58,7 @@ main(int argc, char *argv[]) {
 	buf.close();
 
 	PDF::Document *pdfDoc = new PDF::Document();
-	Page *page = new Page("BT\r\n/F1 24 Tf\r\n100 100 Td\r\n\r\n( Hello World ) Tj");
+	Page *page = new Page("BT\r\n/F1 24 Tf\r\n100 100 Td\r\n\r\n(Budiz pozdraven, svete!) Tj");
 
 	pdfDoc->addPage(shared_ptr<Page>(page));
 

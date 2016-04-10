@@ -6,6 +6,7 @@
 #include "Objects/Array.hpp"
 #include "Objects/Dictionary.hpp"
 #include "Objects/IndirectObject.hpp"
+#include "Objects/Literal.hpp"
 #include "Objects/Name.hpp"
 #include "Objects/Number.hpp"
 #include "Objects/Stream.hpp"
@@ -23,11 +24,15 @@ namespace PDF
 		vector<shared_ptr<Page>> pages;
 
 		IndirectObject<Dictionary> catalog;
+
 		IndirectObject<Dictionary> pageCatalog;
-		Array pageRefs;
 		vector<shared_ptr<IndirectObject<Dictionary>>> pageDefs;
 		vector<shared_ptr<IndirectObject<Stream>>> pageStreams;
+		Array pageRefs;
 		Dictionary trailer;
+
+		IndirectObject<Dictionary> helveticaFont;
+		Dictionary fonts;
 
 		void preparePDFObjects();
 		void printObjAndPushXref(ostream &out, Object &obj,

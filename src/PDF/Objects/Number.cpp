@@ -12,5 +12,5 @@ Number::Number(int number)
 void
 Number::printInternal(ostream &out) const
 {
-	out << number << endl;
+	out << number << "\r\n";
 }

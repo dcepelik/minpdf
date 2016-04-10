@@ -8,13 +8,13 @@ using namespace std;
 void
 Dictionary::printInternal(ostream &out) const
 {
-	out << "<<" << endl;
+	out << "<<" << "\r\n";
 
 	for (auto &item: items) {
 		out << Name(item.first) << (*item.second);
 	}
 
-	out << ">>" << endl;
+	out << ">>" << "\r\n";
 }
 
 

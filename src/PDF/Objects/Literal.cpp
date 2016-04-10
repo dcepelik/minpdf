@@ -13,5 +13,5 @@ Literal::Literal(string code)
 void
 Literal::printInternal(ostream &out) const
 {
-	out << code;
+	out << code << "\r\n";
 }

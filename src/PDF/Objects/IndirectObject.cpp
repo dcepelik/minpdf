@@ -8,9 +8,9 @@ template<class T>
 void
 IndirectObject<T>::printInternal(ostream &out) const
 {
-	out << id << " " << revision << " obj" << endl;
+	out << id << " " << revision << " obj" << "\r\n";
 	wrappedObject->print(out);
-	out << "endobj" << endl;
+	out << "endobj" << "\r\n";
 }
 
 

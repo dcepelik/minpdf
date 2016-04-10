@@ -25,7 +25,7 @@ Stream::printInternal(ostream &out) const
 	dict.addItem("Length", new Number(size));
 
 	dict.print(out);
-	out << "stream" << endl;
+	out << "stream" << "\r\n";
 	out << content;
-	out << endl << "endstream" << endl; /* endl prefixed intentionally */
+	out << "\r\n" << "endstream" << "\r\n"; /* "\r\n" prefixed intentionally */
 }
