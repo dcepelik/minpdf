@@ -8,8 +8,13 @@ using namespace DocumentModel::Elements;
 using namespace std;
 
 
-Container::Container(string name) : Element(name)
+Container::Container(string name) : Element(name) {}
+
+
+void
+Container::addChild(shared_ptr<Element> child)
 {
+	children.push_back(shared_ptr<Element>(move(child)));
 }
 
 

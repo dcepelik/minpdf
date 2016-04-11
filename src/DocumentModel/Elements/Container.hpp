@@ -18,11 +18,13 @@ namespace DocumentModel
 		class Container : public Element
 		{
 			string name;
-
-		public:
 			vector<shared_ptr<Element>> children;
 
+		public:
 			Container(string name);
+
+			void addChild(shared_ptr<Element> child);
+
 			void expand(vector<shared_ptr<Box>> &boxes);
 			virtual void dump(int level = 0);
 			virtual void removeEmptyChildren();

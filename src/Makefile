@@ -14,6 +14,7 @@ OBJS=qutepdf.o\
 	DocumentModel/Elements/Element.o\
 	DocumentModel/Elements/Paragraph.o\
 	DocumentModel/Elements/TextNode.o\
+	Input/ParseError.o\
 	Input/Parser.o\
 	PDF/Document.o\
 	PDF/Objects/Array.o\

@@ -1,111 +1,16 @@
-#include <memory>
 #include <iostream>
+#include <memory>
 #include <sstream>
 
-#include "Input/Parser.hpp"
 #include "DocumentModel/Elements/Paragraph.hpp"
 #include "DocumentModel/Elements/TextNode.hpp"
+#include "ParseError.hpp"
+#include "Parser.hpp"
 
-using namespace Input;
-using namespace DocumentModel;
 using namespace DocumentModel::Elements;
+using namespace DocumentModel;
+using namespace Input;
 using namespace std;
-
-
-Parser::Parser(istream &stream) : stream(stream)
-{
-	textbuf = stringstream();
-}
-
-
-unique_ptr<Document>
-Parser::parseDocument()
-{
-	vector<shared_ptr<Element>> elems;
-
-	Document *doc = new Document();
-	parseChildren(doc->children);
-
-	doc->removeEmptyChildren();
-
-	return unique_ptr<Document>(doc);
-}
-
-
-void
-Parser::parseChildren(vector<shared_ptr<Element>> &children)
-{
-	char c;
-	bool escaping = false;
-	while (stream.get(c)) {
-		if (escaping) {
-			if (!isControlChar(c)) {
-				cerr << "Cannot escape '" << c << "'" << endl;
-			}
-		}
-		else {
-			if (isControlChar(c)) {
-				switch (c) {
-				case Parser::EscapeChar:
-					escaping = true;
-					break;
-
-				case Parser::ElementBegin:
-					pushTextNode(children);
-					stream.unget();
-					children.push_back(parseElement());
-					break;
-
-				case Parser::ElementEnd:
-					stream.unget();
-					pushTextNode(children);
-					return;
-				}
-
-				continue;
-			}
-		}
-
-		escaping = false;
-		textbuf.put(c);
-	}
-
-	pushTextNode(children);
-}
-
-
-void
-Parser::pushTextNode(vector<shared_ptr<Element>> &children)
-{
-	if (textbuf.str().size() > 0) {
-		children.push_back(shared_ptr<Element>(
-			new TextNode(textbuf.str())
-		));
-
-		/* clear the buffer */
-		textbuf.str(string());
-	}
-}
-
-
-shared_ptr<Element>
-Parser::parseElement()
-{
-	if (stream.get() != Parser::ElementBegin) {
-		cerr << "Parse error: missing " << Parser::ElementBegin << endl;
-	}
-
-	string name = parseName();
-
-	Container *cont = new Container(name);
-	parseChildren(cont->children);
-
-	if (stream.get() != Parser::ElementEnd) {
-		cerr << "Parse error: mssing " << Parser::ElementEnd << endl;
-	}
-
-	return shared_ptr<Element>(cont);
-}
 
 
 bool
@@ -127,6 +32,95 @@ Parser::isWhiteChar(char c)
 }
 
 
+Parser::Parser(istream &stream) : stream(stream)
+{
+	textbuf = stringstream();
+}
+
+
+shared_ptr<Document>
+Parser::parseDocument()
+{
+	shared_ptr<Document> doc(new Document());
+	parseChildren(shared_ptr<Element>(doc));
+
+	doc->removeEmptyChildren();
+
+	return doc;
+}
+
+
+void
+Parser::parseChildren(shared_ptr<Element> parent)
+{
+	char c;
+	bool escaping = false;
+
+	while (stream.get(c)) {
+		if (escaping) {
+			if (!isControlChar(c)) {
+				cerr << "Cannot escape '" << c << "'" << endl;
+			}
+		}
+		else {
+			if (isControlChar(c)) {
+				switch (c) {
+				case Parser::EscapeChar:
+					escaping = true;
+					break;
+
+				case Parser::ElementBegin:
+					processTextNode(parent);
+					parent->addChild(parseElement());
+					break;
+
+				case Parser::ElementEnd:
+					stream.unget();
+					processTextNode(parent);
+					return;
+				}
+
+				continue;
+			}
+		}
+
+		escaping = false;
+		textbuf.put(c);
+	}
+
+	processTextNode(parent);
+}
+
+
+shared_ptr<Element>
+Parser::parseElement()
+{
+	string name = parseName();
+
+	shared_ptr<Container> container(new Container(name));
+	parseChildren(container);
+
+	if (stream.get() != Parser::ElementEnd) {
+		throw new ParseError("Parse error: missing " + Parser::ElementEnd);
+	}
+
+	return container;
+}
+
+
+void
+Parser::processTextNode(shared_ptr<Element> parent)
+{
+	if (textbuf.str().size() > 0) {
+		shared_ptr<TextNode> node(new TextNode(textbuf.str()));
+		parent->addChild(node);
+
+		textbuf.str(string());
+		textbuf.clear();
+	}
+}
+
+
 string
 Parser::parseName()
 {
@@ -134,8 +128,9 @@ Parser::parseName()
 
 	char c;
 	while (stream.get(c)) {
-		if (isWhiteChar(c))
+		if (isWhiteChar(c)) {
 			break;
+		}
 
 		if (isControlChar(c)) {
 			stream.unget();

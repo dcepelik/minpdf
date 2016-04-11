@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdexcept>
 #include <string>
 
 #include "Element.hpp"
@@ -12,6 +13,14 @@ using namespace std;
 Element::Element(string name)
 {
 	this->name = name;
+}
+
+
+void
+Element::addChild(shared_ptr<Element> child)
+{
+	(void)child;
+	throw new domain_error("Cannot add children to non-containers");
 }
 
 

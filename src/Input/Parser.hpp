@@ -6,8 +6,8 @@
 
 #include "DocumentModel/Document.hpp"
 
-using namespace std;
 using namespace DocumentModel;
+using namespace std;
 
 
 namespace Input
@@ -19,10 +19,10 @@ namespace Input
 
 		Parser();
 
-		void parseChildren(vector<shared_ptr<Element>> &children);
+		void parseChildren(shared_ptr<Element> parent);
 		shared_ptr<Element> parseElement();
 		string parseName();
-		void pushTextNode(vector<shared_ptr<Element>> &children);
+		void processTextNode(shared_ptr<Element> parent);
 
 	public:
 		static constexpr char ElementBegin = '{';
@@ -32,7 +32,7 @@ namespace Input
 		static constexpr char ArgSep = ' ';
 
 		Parser(istream &stream);
-		unique_ptr<Document> parseDocument();
+		shared_ptr<Document> parseDocument();
 		static bool isControlChar(char c);
 		static bool isWhiteChar(char c);
 	};
