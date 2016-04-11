@@ -3,10 +3,11 @@
 #include <iostream>
 #include <vector>
 
-#include "Parser.hpp"
+#include "Input/Parser.hpp"
 #include "Renderer.hpp"
 
 using namespace std;
+using namespace Input;
 
 
 void

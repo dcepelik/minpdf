@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "Document.hpp"
+#include "DocumentModel/Document.hpp"
 #include "PDF/Document.hpp"
 
 using namespace std;
