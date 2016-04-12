@@ -8,75 +8,84 @@ using namespace PDF;
 
 Document::Document()
 {
-	pageRefs = shared_ptr<Array>(new Array());
-	fonts = shared_ptr<Dictionary>(new Dictionary());
 }
 
 
 void
 Document::preparePDFObjects()
 {	
-	catalog.wrapped()->addItem("Type", new Name("Catalog"));
-	catalog.wrapped()->addItem("Pages", pageCatalog.getRef());
-
-	pageCatalog.wrapped()->addItem("Type", new Name("Pages"));
-	pageCatalog.wrapped()->addItem("Kids", pageRefs);
-	pageCatalog.wrapped()->addItem("Count", new Number(pages.size()));
-
-	trailer.addItem("Root", catalog.getRef());
-	trailer.addItem("Size", new Number(Object::objectCount() + 1));
-
-	fonts->addItem("F1", helveticaFont.getRef());
-
-	helveticaFont.wrapped()->addItem("Type", new Name("Font"));
-	helveticaFont.wrapped()->addItem("Subtype", new Name("Type1"));
-	helveticaFont.wrapped()->addItem("Name", new Name("F1"));
-	helveticaFont.wrapped()->addItem("BaseFont", new Name("Courier"));
-	helveticaFont.wrapped()->addItem("Encoding", new Name("MacRomanEncoding"));
 }
 
 
 void
 Document::addPage(shared_ptr<Page> page)
 {
-	pages.push_back(page);
-
-	Dictionary *pageResources = new Dictionary();
-	pageResources->addItem("Font", fonts);
-
-	/* page content-stream */
-	auto pageStream = new IndirectObject<Stream>(
-		shared_ptr<Stream>(new Stream(page->contents()))
-	);
-	pageStreams.push_back(shared_ptr<IndirectObject<Stream>>(pageStream));
-
-	/* page definition dictionary */
-	auto pageDef = new IndirectObject<Dictionary>();
-	pageDef->wrapped()->addItem("Type", new Name("Page"));
-	pageDef->wrapped()->addItem("Parent", pageCatalog.getRef());
-	pageDef->wrapped()->addItem("MediaBox", new Literal("[0 0 612 792]\r\n"));
-	pageDef->wrapped()->addItem("Contents", pageStream->getRef());
-	pageDef->wrapped()->addItem("Resources", shared_ptr<Object>(pageResources));
-
-	pageDefs.push_back(shared_ptr<IndirectObject<Dictionary>>(pageDef));
-
-
-	pageRefs->addChild(pageDef->getRef());
+	docPages.push_back(page);
 }
 
 
 void
 Document::writePDFOutput(Writer &writer)
 {
-	preparePDFObjects();
-
-	vector<int> xref;
-
 	writer.writePDFHeader();
 
+	IndirectObject<Dictionary> catalog;
+	IndirectObject<Dictionary> pages;
+	Array kids;
+	Dictionary trailer;
+	Dictionary fonts;
+	IndirectObject<Dictionary> defaultFont;
+
+	catalog.getInner().addItem("Type", new Name("Catalog"));
+	catalog.getInner().addItem("Pages", pages.getReference().get());
+
+	pages.getInner().addItem("Type", new Name("Pages"));
+	pages.getInner().addItem("Kids", &kids);
+	pages.getInner().addItem("Count", new Number(docPages.size()));
+
+	trailer.addItem("Root", catalog.getReference().get());
+	trailer.addItem("Size", new Number(5)); // TODO
+
+	defaultFont.getInner().addItem("Type", new Name("Font"));
+	defaultFont.getInner().addItem("Subtype", new Name("Type1"));
+	defaultFont.getInner().addItem("Name", new Name("F1"));
+	defaultFont.getInner().addItem("BaseFont", new Name("Courier"));
+	defaultFont.getInner().addItem("Encoding", new Name("MacRomanEncoding"));
+
+	fonts.addItem("F1", defaultFont.getReference().get());
+
+	vector<unique_ptr<Reference>> pageRefs;
+
+	for (auto docPage: docPages) {
+		Dictionary resources;
+		resources.addItem("Font", &fonts);
+
+		/* page content stream */
+		IndirectObject<Stream> stream(Stream(docPage->contents()));
+		stream.writePDFOutput(writer);
+
+		/* page definition dictionary */
+		IndirectObject<Dictionary> pageDef;
+		pageDef.getInner().addItem("Type", new Name("Page"));
+		pageDef.getInner().addItem("Parent", pages.getReference().get());
+
+		pageDef.getInner().addItem("MediaBox", new Literal("[0 0 612 792]"));
+		writer.writeEOL();
+
+		pageDef.getInner().addItem("Contents", stream.getReference().get());
+		pageDef.getInner().addItem("Resources", &resources);
+
+		/* PDF::Objects::Reference needs to survive this block */
+		pageRefs.push_back(move(pageDef.getReference()));
+	}
+
+	for (auto &pageRef: pageRefs) {
+		kids.addChild(pageRef.get());
+	}
+
 	catalog.writePDFOutput(writer);
-	pageCatalog.writePDFOutput(writer);
-	helveticaFont.writePDFOutput(writer);
+	pages.writePDFOutput(writer);
+	defaultFont.writePDFOutput(writer);
 
 	for (auto pageStream: pageStreams) {
 		pageStream->writePDFOutput(writer);

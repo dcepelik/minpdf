@@ -20,7 +20,7 @@ Array::writePDFOutput(Writer &writer)
 
 
 void
-Array::addChild(shared_ptr<Object> obj)
+Array::addChild(Object *obj)
 {
 	children.push_back(obj);
 }

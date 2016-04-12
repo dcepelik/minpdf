@@ -25,14 +25,7 @@ Dictionary::writePDFOutput(Writer &writer)
 
 
 void
-Dictionary::addItem(string key, shared_ptr<Object> value)
+Dictionary::addItem(string name, Object *obj)
 {
-	items.emplace(key, value);
-}
-
-
-void
-Dictionary::addItem(string key, Object *value)
-{
-	items.emplace(key, shared_ptr<Object>(value));
+	items.emplace(name, obj);
 }

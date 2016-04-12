@@ -22,18 +22,10 @@ namespace PDF
 {
 	class Document
 	{
-		vector<shared_ptr<Page>> pages;
+		vector<shared_ptr<Page>> docPages;
 
-		IndirectObject<Dictionary> catalog;
-
-		IndirectObject<Dictionary> pageCatalog;
 		vector<shared_ptr<IndirectObject<Dictionary>>> pageDefs;
 		vector<shared_ptr<IndirectObject<Stream>>> pageStreams;
-		shared_ptr<Array> pageRefs;
-		Dictionary trailer;
-
-		IndirectObject<Dictionary> helveticaFont;
-		shared_ptr<Dictionary> fonts;
 
 		void preparePDFObjects();
 		void printObjAndPushXref(ostream &out, Object &obj,
@@ -43,6 +35,7 @@ namespace PDF
 		Document();
 
 		void addPage(shared_ptr<Page> page);
+
 		void writePDFOutput(Writer &writer);
 	};
 }

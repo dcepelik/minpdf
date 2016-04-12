@@ -14,10 +14,11 @@ namespace PDF
 	{
 		class Array : public Object
 		{
-			vector<shared_ptr<Object>> children;
+			vector<Object *> children;
 
 		public:
-			void addChild(shared_ptr<Object> obj);
+			void addChild(Object *obj);
+
 			void writePDFOutput(Writer &writer);
 		};
 	}

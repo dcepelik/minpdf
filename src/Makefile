@@ -19,7 +19,6 @@ OBJS=qutepdf.o\
 	PDF/Document.o\
 	PDF/Objects/Array.o\
 	PDF/Objects/Dictionary.o\
-	PDF/Objects/IndirectObject.o\
 	PDF/Objects/Literal.o\
 	PDF/Objects/Name.o\
 	PDF/Objects/Number.o\

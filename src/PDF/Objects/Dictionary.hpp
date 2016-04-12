@@ -16,11 +16,12 @@ namespace PDF
 	{
 		class Dictionary : public Object
 		{
-			unordered_map<string, shared_ptr<Object>> items;
+			unordered_map<string, Object *> items;
 
 		public:
-			void addItem(string key, shared_ptr<Object> value);
-			void addItem(string key, Object *value);
+			void addItem(string name, Object *obj);
+			void addItem(string name, shared_ptr<Object> ptr);
+
 			void writePDFOutput(Writer &writer);
 		};
 	}
