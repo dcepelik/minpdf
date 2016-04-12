@@ -3,6 +3,7 @@
 #include "Number.hpp"
 
 using namespace PDF::Objects;
+using namespace PDF;
 using namespace std;
 
 
@@ -18,14 +19,15 @@ Stream::Stream(string content)
 
 
 void
-Stream::printInternal(ostream &out) const
+Stream::writePDFOutput(Writer &writer)
 {
 	Dictionary dict;
-	int size = content.size();
-	dict.addItem("Length", new Number(size));
+	dict.addItem("Length", new Number(content.length()));
 
-	dict.print(out);
-	out << "stream" << "\r\n";
-	out << content;
-	out << "\r\n" << "endstream" << "\r\n"; /* "\r\n" prefixed intentionally */
+	dict.writePDFOutput(writer);
+	writer.increaseIndent();
+	writer.writeLine("stream");
+	writer.write(content);
+	writer.writeLine("endstream");
+	writer.decreaseIndent();
 }

@@ -2,8 +2,8 @@
 
 #include "Document.hpp"
 
-using namespace PDF;
 using namespace PDF::Objects;
+using namespace PDF;
 
 
 Document::Document()
@@ -68,22 +68,22 @@ Document::addPage(shared_ptr<Page> page)
 void
 Document::printObjAndPushXref(ostream &out, Object &obj, vector<int> &xref)
 {
-	xref.push_back(out.tellp()); /* tellp(): won't work for cout */
-	out << obj;
+	//xref.push_back(out.tellp()); /* tellp(): won't work for cout */
+	//out << obj;
 }
 
 
 void
-Document::print(ostream &out)
+Document::writePDFOutput(Writer &writer)
 {
 	preparePDFObjects();
 
 	vector<int> xref;
 
-	/* http://stackoverflow.com/questions/23433650 */
-	string comment8bit = "\r%\xE2\xE3\xCF\xD3";
-	out << "%PDF-1.4" << comment8bit << "\r\n";
+	writer.writePDFHeader();
 
+	catalog.writePDFOutput(writer);
+	/*
 	printObjAndPushXref(out, catalog, xref);
 	printObjAndPushXref(out, pageCatalog, xref);
 	printObjAndPushXref(out, helveticaFont, xref);
@@ -109,5 +109,9 @@ Document::print(ostream &out)
 	out << "trailer " << trailer;
 	out << "startxref" << "\r\n";
 	out << xrefOffset << "\r\n";
+
 	out << "%%EOF" << "\r\n";
+	*/
+
+	writer.writeEOF();
 }

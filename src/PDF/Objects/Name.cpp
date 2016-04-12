@@ -1,6 +1,7 @@
 #include "Name.hpp"
 
 using namespace PDF::Objects;
+using namespace PDF;
 using namespace std;
 
 
@@ -11,7 +12,7 @@ Name::Name(string name)
 
 
 void
-Name::printInternal(ostream &out) const
+Name::writePDFOutput(Writer &writer)
 {
-	out << "/" << name << "\r\n";
+	writer.writeLine("/" + name);
 }

@@ -1,6 +1,7 @@
 #include "Literal.hpp"
 
 using namespace PDF::Objects;
+using namespace PDF;
 using namespace std;
 
 
@@ -11,7 +12,7 @@ Literal::Literal(string code)
 
 
 void
-Literal::printInternal(ostream &out) const
+Literal::writePDFOutput(Writer &writer)
 {
-	out << code << "\r\n";
+	writer.write(code);
 }

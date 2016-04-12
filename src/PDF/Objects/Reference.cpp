@@ -1,6 +1,9 @@
+#include <sstream>
+
 #include "Reference.hpp"
 
 using namespace PDF::Objects;
+using namespace PDF;
 
 
 Reference::Reference(int id, int revision)
@@ -11,7 +14,7 @@ Reference::Reference(int id, int revision)
 
 
 void
-Reference::printInternal(ostream &out) const
+Reference::writePDFOutput(Writer &writer)
 {
-	out << id << " " << revision << " R" << "\r\n";
+	writer.writeLine(to_string(id) + " " + to_string(revision) + " R");
 }

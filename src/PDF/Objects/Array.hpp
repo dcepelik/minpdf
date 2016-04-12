@@ -16,10 +16,10 @@ namespace PDF
 		{
 			vector<shared_ptr<Object>> children;
 
-			virtual void printInternal(ostream &stream) const;
-
 		public:
 			void addChild(shared_ptr<Object> obj);
+			void writePDFOutput(Writer &writer);
 		};
 	}
+
 }

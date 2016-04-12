@@ -4,6 +4,7 @@
 
 #include "Object.hpp"
 
+using namespace PDF;
 using namespace std;
 
 
@@ -15,10 +16,10 @@ namespace PDF
 		{
 			string name;
 
-			virtual void printInternal(ostream &stream) const;
-
 		public:
 			Name(string name);
+
+			void writePDFOutput(Writer &writer);
 		};
 	}
 }

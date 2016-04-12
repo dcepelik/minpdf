@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+#include "PDF/Writer.hpp"
+#include "PDF/Objects/Object.hpp"
 #include "Input/Parser.hpp"
 #include "Renderer.hpp"
 
@@ -48,7 +50,8 @@ main(int argc, char *argv[]) {
 	Renderer *renderer = new Renderer();
 	shared_ptr<PDF::Document> pdfDoc = renderer->render(doc);
 
-	pdfDoc->print(ofs);
+	Writer writer(cout);
+	pdfDoc->writePDFOutput(writer);
 
 	cout << "Done." << endl;
 

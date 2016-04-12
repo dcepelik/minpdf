@@ -5,6 +5,7 @@
 #include "Object.hpp"
 #include "Reference.hpp"
 
+using namespace PDF;
 using namespace std;
 
 
@@ -19,7 +20,6 @@ namespace PDF
 			int revision;
 			shared_ptr<T> wrappedObject;
 
-			virtual void printInternal(ostream &out) const;
 			void setupID();
 
 		public:
@@ -28,6 +28,10 @@ namespace PDF
 
 			shared_ptr<T> wrapped();
 			shared_ptr<Reference> getRef();
+
+			void writePDFOutput(Writer &writer);
+
+			int getID();
 		};
 	}
 }

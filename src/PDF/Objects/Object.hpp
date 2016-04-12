@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "PDF/Writer.hpp"
+
 using namespace std;
 
 
@@ -11,18 +13,13 @@ namespace PDF
 	{
 		class Object
 		{
-			virtual void printInternal(ostream& out) const = 0;
-
 			/* @see http://stackoverflow.com/questions/9702053 */
 			static int counter;
 
 		public:
 			static int objectCount();
 
-			void print(ostream& out) const;
+			virtual void writePDFOutput(Writer &writer) = 0;
 		};
 	}
 }
-
-
-ostream& operator<<(ostream &out, const PDF::Objects::Object &obj);

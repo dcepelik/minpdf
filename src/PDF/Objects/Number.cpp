@@ -1,6 +1,7 @@
 #include "Number.hpp"
 
 using namespace PDF::Objects;
+using namespace PDF;
 
 
 Number::Number(int number)
@@ -10,7 +11,7 @@ Number::Number(int number)
 
 
 void
-Number::printInternal(ostream &out) const
+Number::writePDFOutput(Writer &writer)
 {
-	out << number << "\r\n";
+	writer.write(to_string(number));
 }

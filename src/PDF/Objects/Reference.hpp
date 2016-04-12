@@ -2,7 +2,6 @@
 
 #include "Object.hpp"
 
-
 namespace PDF
 {
 	namespace Objects
@@ -12,10 +11,10 @@ namespace PDF
 			int id;
 			int revision;
 
-			virtual void printInternal(ostream &out) const;
-
 		public:
 			Reference(int id, int revision);
+
+			void writePDFOutput(Writer &writer);
 		};
 	}
 }

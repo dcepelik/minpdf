@@ -27,6 +27,7 @@ OBJS=qutepdf.o\
 	PDF/Objects/Reference.o\
 	PDF/Objects/Stream.o\
 	PDF/Page.o\
+	PDF/Writer.o\
 	Renderer.o
 
 $(PROG): $(OBJS)

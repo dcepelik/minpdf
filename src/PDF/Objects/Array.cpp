@@ -5,15 +5,17 @@ using namespace std;
 
 
 void
-Array::printInternal(ostream &out) const
+Array::writePDFOutput(Writer &writer)
 {
-	out << "[" << "\r\n";
-	
-	for (auto it = children.begin(); it != children.end(); it++) {
-		(*it)->print(out);
+	writer.writeLine("[");
+	writer.increaseIndent();
+
+	for (auto child: children) {
+		child->writePDFOutput(writer);
 	}
 
-	out << "]" << "\r\n";
+	writer.decreaseIndent();
+	writer.writeLine("]");
 }
 
 

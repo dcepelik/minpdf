@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 #include "Objects/Array.hpp"
 #include "Objects/Dictionary.hpp"
@@ -11,9 +11,10 @@
 #include "Objects/Number.hpp"
 #include "Objects/Stream.hpp"
 #include "Page.hpp"
+#include "Writer.hpp"
 
-using namespace PDF;
 using namespace PDF::Objects;
+using namespace PDF;
 using namespace std;
 
 
@@ -42,6 +43,6 @@ namespace PDF
 		Document();
 
 		void addPage(shared_ptr<Page> page);
-		void print(ostream &out);
+		void writePDFOutput(Writer &writer);
 	};
 }

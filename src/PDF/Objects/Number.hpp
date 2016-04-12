@@ -2,6 +2,7 @@
 
 #include "Object.hpp"
 
+using namespace PDF;
 
 namespace PDF
 {
@@ -11,10 +12,10 @@ namespace PDF
 		{
 			int number;
 
-			virtual void printInternal(ostream &out) const;
-
 		public:
 			Number(int number);
+
+			void writePDFOutput(Writer &writer);
 		};
 	}
 }

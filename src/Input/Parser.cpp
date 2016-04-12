@@ -59,7 +59,9 @@ Parser::parseChildren(shared_ptr<Element> parent)
 	while (stream.get(c)) {
 		if (escaping) {
 			if (!isControlChar(c)) {
-				cerr << "Cannot escape '" << c << "'" << endl;
+				throw new ParseError(
+					"Invalid escape sequence"
+				);
 			}
 		}
 		else {

@@ -2,19 +2,25 @@
 #include "Name.hpp"
 
 using namespace PDF::Objects;
+using namespace PDF;
 using namespace std;
 
 
 void
-Dictionary::printInternal(ostream &out) const
+Dictionary::writePDFOutput(Writer &writer)
 {
-	out << "<<" << "\r\n";
+	writer.writeLine("<<");
+	writer.increaseIndent();
 
-	for (auto &item: items) {
-		out << Name(item.first) << (*item.second);
+	for (auto item: items) {
+		Name(item.first).writePDFOutput(writer);
+		writer.increaseIndent();
+		item.second->writePDFOutput(writer);
+		writer.decreaseIndent();
 	}
-
-	out << ">>" << "\r\n";
+	
+	writer.decreaseIndent();
+	writer.writeLine(">>");
 }
 
 

@@ -1,16 +1,19 @@
 #include "IndirectObject.hpp"
 
 using namespace PDF::Objects;
+using namespace PDF;
 using namespace std;
 
 
 template<class T>
 void
-IndirectObject<T>::printInternal(ostream &out) const
+IndirectObject<T>::writePDFOutput(Writer &writer)
 {
-	out << id << " " << revision << " obj" << "\r\n";
-	wrappedObject->print(out);
-	out << "endobj" << "\r\n";
+	writer.writeLine(to_string(id) + " " + to_string(revision) + " obj");
+	writer.increaseIndent();
+	wrappedObject->writePDFOutput(writer);
+	writer.decreaseIndent();
+	writer.writeLine("endobj");
 }
 
 
@@ -54,6 +57,14 @@ shared_ptr<Reference>
 IndirectObject<T>::getRef()
 {
 	return shared_ptr<Reference>(new Reference(this->id, this->revision));
+}
+
+
+template<class T>
+int
+IndirectObject<T>::getID()
+{
+	return id;
 }
 
 

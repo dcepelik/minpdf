@@ -1,11 +1,12 @@
 #pragma once
 
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 
-#include "Object.hpp"
 #include "Name.hpp"
+#include "Object.hpp"
 
+using namespace PDF;
 using namespace std;
 
 
@@ -17,11 +18,10 @@ namespace PDF
 		{
 			unordered_map<string, shared_ptr<Object>> items;
 
-			virtual void printInternal(ostream &stream) const;
-
 		public:
 			void addItem(string key, shared_ptr<Object> value);
 			void addItem(string key, Object *value);
+			void writePDFOutput(Writer &writer);
 		};
 	}
 }
