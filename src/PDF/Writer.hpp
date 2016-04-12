@@ -1,8 +1,8 @@
 #pragma once
 
+#include <map>
 #include <ostream>
 #include <string>
-#include <unordered_map>
 
 using namespace std;
 
@@ -17,7 +17,9 @@ namespace PDF
 		int indent = 0;
 		string version;
 		bool indentNextWrite = true;
-		unordered_map<int, int> xrefEntries;
+
+		map<int, int> xrefEntries;
+		int xrefOffset = 0;
 
 		void indentCurrentLine();
 
@@ -26,7 +28,6 @@ namespace PDF
 
 		void writePDFHeader();
 		void writeEOL();
-		void writeEOF();
 
 		void write(string code);
 		void writeLine(string code);
@@ -35,5 +36,9 @@ namespace PDF
 		void decreaseIndent();
 
 		void addXrefEntry(int objID);
+
+		void writeXrefTable();
+		void writeStartXref();
+		void writeEOF();
 	};
 }

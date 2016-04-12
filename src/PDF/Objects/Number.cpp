@@ -13,5 +13,5 @@ Number::Number(int number)
 void
 Number::writePDFOutput(Writer &writer)
 {
-	writer.write(to_string(number));
+	writer.writeLine(to_string(number));
 }

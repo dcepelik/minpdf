@@ -9,6 +9,8 @@ template<class T>
 void
 IndirectObject<T>::writePDFOutput(Writer &writer)
 {
+	writer.addXrefEntry(id);
+
 	writer.writeLine(to_string(id) + " " + to_string(revision) + " obj");
 	writer.increaseIndent();
 	wrappedObject->writePDFOutput(writer);

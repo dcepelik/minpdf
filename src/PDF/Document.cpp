@@ -54,7 +54,7 @@ Document::addPage(shared_ptr<Page> page)
 	auto pageDef = new IndirectObject<Dictionary>();
 	pageDef->wrapped()->addItem("Type", new Name("Page"));
 	pageDef->wrapped()->addItem("Parent", pageCatalog.getRef());
-	pageDef->wrapped()->addItem("MediaBox", new Literal("[0 0 612 792]"));
+	pageDef->wrapped()->addItem("MediaBox", new Literal("[0 0 612 792]\r\n"));
 	pageDef->wrapped()->addItem("Contents", pageStream->getRef());
 	pageDef->wrapped()->addItem("Resources", shared_ptr<Object>(pageResources));
 
@@ -62,14 +62,6 @@ Document::addPage(shared_ptr<Page> page)
 
 
 	pageRefs->addChild(pageDef->getRef());
-}
-
-
-void
-Document::printObjAndPushXref(ostream &out, Object &obj, vector<int> &xref)
-{
-	//xref.push_back(out.tellp()); /* tellp(): won't work for cout */
-	//out << obj;
 }
 
 
@@ -83,35 +75,20 @@ Document::writePDFOutput(Writer &writer)
 	writer.writePDFHeader();
 
 	catalog.writePDFOutput(writer);
-	/*
-	printObjAndPushXref(out, catalog, xref);
-	printObjAndPushXref(out, pageCatalog, xref);
-	printObjAndPushXref(out, helveticaFont, xref);
+	pageCatalog.writePDFOutput(writer);
+	helveticaFont.writePDFOutput(writer);
 
 	for (auto pageStream: pageStreams) {
-		printObjAndPushXref(out, *pageStream, xref);
+		pageStream->writePDFOutput(writer);
 	}
 
 	for (auto pageDef: pageDefs) {
-		printObjAndPushXref(out, *pageDef, xref);
+		pageDef->writePDFOutput(writer);
 	}
 
-	int xrefOffset = out.tellp();
-	out << "xref" << "\r\n";
+	writer.writeLine("trailer");
+	trailer.writePDFOutput(writer);
 
-	out << "0 " << (xref.size() + 1) << "\r\n";
-	out << "0000000000 65535 f" << "\r\n";
-
-	for (auto offset: xref) {
-		out << setfill('0') << setw(10) << offset << " 00000 n" << "\r\n";
-	}
-
-	out << "trailer " << trailer;
-	out << "startxref" << "\r\n";
-	out << xrefOffset << "\r\n";
-
-	out << "%%EOF" << "\r\n";
-	*/
-
+	writer.writeXrefTable();
 	writer.writeEOF();
 }

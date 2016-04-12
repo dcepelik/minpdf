@@ -14,5 +14,5 @@ Literal::Literal(string code)
 void
 Literal::writePDFOutput(Writer &writer)
 {
-	writer.write(code);
+	writer.write(code); /* be verbatim: don't add an EOL */
 }

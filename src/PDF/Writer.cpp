@@ -1,3 +1,5 @@
+#include <iomanip>
+
 #include "Writer.hpp"
 
 using namespace PDF;
@@ -81,4 +83,41 @@ void
 Writer::decreaseIndent()
 {
 	this->indent--;
+}
+
+
+void
+Writer::writeXrefTable()
+{
+	xrefOffset = out.tellp();
+
+	/* assuming xrefEntry keys are contiguous and start with 1 0 obj */
+	out << "xref"
+		<< EOL
+		<< 0
+		<< " "
+		<< (xrefEntries.size() + 1) /* + 1 for `0 0 obj' */
+		<< EOL;
+
+	/* write `0 0 obj' */
+	out << "0000000000 65535 f"
+		<< EOL;
+
+	for (auto xrefEntry: xrefEntries) {
+		out << setfill('0')
+			<< setw(10)
+			<< xrefEntry.second
+			<< " "
+			<< setw(5)
+			<< 0
+			<< " n"
+			<< EOL;
+	}
+}
+
+
+void
+Writer::writeStartXref()
+{
+	out << "startxref" << EOL << xrefOffset << EOL;
 }
