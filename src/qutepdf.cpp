@@ -47,11 +47,13 @@ main(int argc, char *argv[]) {
 
 	buf.close();
 
+	/*
 	Renderer *renderer = new Renderer();
 	shared_ptr<PDF::Document> pdfDoc = renderer->render(doc);
 
 	Writer writer(cout);
 	pdfDoc->writePDFOutput(writer);
+	*/
 
 	cout << "Done." << endl;
 

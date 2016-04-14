@@ -3,33 +3,13 @@
 #include "HorizontalGlue.hpp"
 
 using namespace BoxModel;
-using namespace std;
 
 
-void
-HorizontalGlue::dump()
+HorizontalGlue::HorizontalGlue() : Box(0, 0) {}
+
+
+BoxType
+HorizontalGlue::getType()
 {
-	cout << "#HGlue#";
-}
-
-
-void
-HorizontalGlue::print(ostream &out) const
-{
-	(void)out;
-	/* do whatever */
-}
-
-
-int
-HorizontalGlue::getWidth()
-{
-	return 20;
-}
-
-
-int
-HorizontalGlue::getStretchability()
-{
-	return 1000;
+	return BoxType::HorizontalGlue;
 }

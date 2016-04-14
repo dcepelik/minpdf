@@ -3,40 +3,16 @@
 #include "Char.hpp"
 
 using namespace BoxModel;
-using namespace std;
 
 
-Char::Char(char c)
+Char::Char(char c) : Box(15, 30)
 {
 	this->c = c;
 }
 
 
-void
-Char::dump()
+BoxType
+Char::getType()
 {
-	cout << "[" << c << "]";
-}
-
-
-void
-Char::print(ostream &out) const
-{
-	out << "/F1 24 Tf\r\n";
-	out << "1 0 0 1 " << x << " " << y << " Tm\r\n";
-	out << "(" << c << ") Tj\r\n";
-}
-
-
-int
-Char::getWidth()
-{
-	return 14;
-}
-
-
-int
-Char::getStretchability()
-{
-	return 0;
+	return BoxType::Char;
 }

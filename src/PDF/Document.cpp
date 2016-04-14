@@ -12,12 +12,6 @@ Document::Document()
 
 
 void
-Document::preparePDFObjects()
-{	
-}
-
-
-void
 Document::addPage(shared_ptr<Page> page)
 {
 	docPages.push_back(page);
@@ -86,14 +80,6 @@ Document::writePDFOutput(Writer &writer)
 	catalog.writePDFOutput(writer);
 	pages.writePDFOutput(writer);
 	defaultFont.writePDFOutput(writer);
-
-	for (auto pageStream: pageStreams) {
-		pageStream->writePDFOutput(writer);
-	}
-
-	for (auto pageDef: pageDefs) {
-		pageDef->writePDFOutput(writer);
-	}
 
 	writer.writeLine("trailer");
 	trailer.writePDFOutput(writer);

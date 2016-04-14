@@ -2,23 +2,29 @@
 
 #include <iostream>
 
+#include "BoxType.hpp"
+
 using namespace std;
 
 namespace BoxModel
 {
 	class Box
 	{
-	protected:
-		int x;
-		int y;
+		int originX;
+		int originY;
 		int width;
+		int height;
 
 	public:
-		void setOrigin(int x, int y);
-		virtual int getStretchability() = 0;
-		virtual int getWidth() = 0;
+		Box(int width, int height);
+
+		void setOrigin(int originX, int originY);
+
+		virtual BoxType getType() = 0;
+
+		int getWidth();
+		int getHeight();
+
 		void setWidth(int width);
-		virtual void dump() = 0;
-		virtual void print(ostream &out) const = 0;
 	};
 }

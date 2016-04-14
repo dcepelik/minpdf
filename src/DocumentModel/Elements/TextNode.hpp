@@ -2,8 +2,10 @@
 
 #include <string>
 
+#include "BoxModel/Box.hpp"
 #include "Element.hpp"
 
+using namespace BoxModel;
 using namespace std;
 
 

@@ -11,5 +11,7 @@ namespace BoxModel
 
 	public:
 		Penalty(int value);
+
+		BoxType getType(); 
 	};
 }

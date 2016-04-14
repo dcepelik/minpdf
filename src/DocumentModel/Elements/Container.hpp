@@ -4,10 +4,9 @@
 #include <vector>
 
 #include "BoxModel/Box.hpp"
-#include "DocumentModel/Elements/Element.hpp"
+#include "Element.hpp"
 
 using namespace BoxModel;
-using namespace DocumentModel::Elements;
 using namespace std;
 
 

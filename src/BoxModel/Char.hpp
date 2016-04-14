@@ -13,9 +13,7 @@ namespace BoxModel
 
 	public:
 		Char(char c);
-		virtual int getStretchability();
-		virtual int getWidth();
-		virtual void dump();
-		virtual void print(ostream &out) const;
+
+		BoxType getType(); 
 	};
 }

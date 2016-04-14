@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <regex>
 
 #include "BoxModel/Char.hpp"

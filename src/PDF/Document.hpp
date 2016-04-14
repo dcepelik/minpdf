@@ -24,13 +24,6 @@ namespace PDF
 	{
 		vector<shared_ptr<Page>> docPages;
 
-		vector<shared_ptr<IndirectObject<Dictionary>>> pageDefs;
-		vector<shared_ptr<IndirectObject<Stream>>> pageStreams;
-
-		void preparePDFObjects();
-		void printObjAndPushXref(ostream &out, Object &obj,
-			vector<int> &xref);
-	
 	public:
 		Document();
 

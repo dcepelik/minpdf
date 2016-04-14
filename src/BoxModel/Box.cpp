@@ -3,11 +3,18 @@
 using namespace BoxModel;
 
 
-void
-Box::setOrigin(int x, int y)
+Box::Box(int width, int height)
 {
-	this->x = x;
-	this->y = y;
+	this->width = width;
+	this->height = height;
+}
+
+
+void
+Box::setOrigin(int originX, int originY)
+{
+	this->originX = originX;
+	this->originY = originY;
 }
 
 

@@ -3,7 +3,14 @@
 using namespace BoxModel;
 
 
-Penalty::Penalty(int value)
+Penalty::Penalty(int value) : Box(0, 0)
 {
 	this->value = value;
+}
+
+
+BoxType
+Penalty::getType()
+{
+	return BoxType::Penalty;
 }
