@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 
 #include "BoxType.hpp"
 
@@ -10,10 +11,13 @@ namespace BoxModel
 {
 	class Box
 	{
+	protected:
 		int originX;
 		int originY;
-		int width;
+		int width = 0;
 		int height;
+		int badness = 1e8;
+		shared_ptr<Box> prev;
 
 	public:
 		Box(int width, int height);
@@ -21,9 +25,17 @@ namespace BoxModel
 		void setOrigin(int originX, int originY);
 
 		virtual BoxType getType() = 0;
+		virtual void writePSOutput(ostream &out);
+		virtual void dump() = 0;
 
 		int getWidth();
 		int getHeight();
+
+		int getBadness();
+		void setBadness(int badness);
+
+		shared_ptr<Box> getPrev();
+		void setPrev(shared_ptr<Box> prev);
 
 		void setWidth(int width);
 	};

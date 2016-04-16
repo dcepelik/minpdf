@@ -12,4 +12,6 @@ class Renderer
 {
 public:
 	Renderer();
+
+	void render(vector<shared_ptr<Box>> &boxes);
 };

@@ -11,8 +11,24 @@ Char::Char(char c) : Box(15, 30)
 }
 
 
+void
+Char::dump()
+{
+	cout << c;
+}
+
+
 BoxType
 Char::getType()
 {
-	return BoxType::Char;
+	return BoxType::CharBox;
+}
+
+
+
+void
+Char::writePSOutput(ostream &out)
+{
+	out << "/F1 24 Tf\r\n(" << c << ") Tj\r\n";
+	out << "15 0 Td\r\n";
 }

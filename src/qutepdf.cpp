@@ -47,13 +47,28 @@ main(int argc, char *argv[]) {
 
 	buf.close();
 
-	/*
 	Renderer *renderer = new Renderer();
-	shared_ptr<PDF::Document> pdfDoc = renderer->render(doc);
+	
+	vector<shared_ptr<Box>> boxes;
+	doc->expand(boxes);
 
-	Writer writer(cout);
+	renderer->render(boxes);
+
+	stringstream ps;
+	ps << "0 752 Td\r\n";
+	for (auto box: boxes) {
+		box->dump();
+		box->writePSOutput(ps);
+	}
+	cout << endl;
+
+	shared_ptr<PDF::Document> pdfDoc(new PDF::Document);
+	shared_ptr<PDF::Page> pdfPage(new PDF::Page(ps.str()));
+	pdfDoc->addPage(pdfPage);
+
+	Writer writer(ofs);
 	pdfDoc->writePDFOutput(writer);
-	*/
+
 
 	cout << "Done." << endl;
 

@@ -6,6 +6,7 @@ namespace BoxModel
 	{
 		CharBox,
 		HorizontalGlueBox,
-		PenaltyBox
+		PenaltyBox,
+		LineBreakBox
 	};
 }

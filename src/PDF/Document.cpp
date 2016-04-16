@@ -31,14 +31,17 @@ Document::writePDFOutput(Writer &writer)
 	IndirectObject<Dictionary> defaultFont;
 
 	catalog.getInner().addItem("Type", new Name("Catalog"));
-	catalog.getInner().addItem("Pages", pages.getReference().get());
+
+	auto pagesRef = pages.getReference();
+	catalog.getInner().addItem("Pages", pagesRef.get());
 
 	pages.getInner().addItem("Type", new Name("Pages"));
 	pages.getInner().addItem("Kids", &kids);
 	pages.getInner().addItem("Count", new Number(docPages.size()));
 
-	trailer.addItem("Root", catalog.getReference().get());
-	trailer.addItem("Size", new Number(5)); // TODO
+	auto catalogRef = catalog.getReference();
+	trailer.addItem("Root", catalogRef.get());
+	trailer.addItem("Size", new Number(6)); // TODO
 
 	defaultFont.getInner().addItem("Type", new Name("Font"));
 	defaultFont.getInner().addItem("Subtype", new Name("Type1"));
@@ -46,7 +49,8 @@ Document::writePDFOutput(Writer &writer)
 	defaultFont.getInner().addItem("BaseFont", new Name("Courier"));
 	defaultFont.getInner().addItem("Encoding", new Name("MacRomanEncoding"));
 
-	fonts.addItem("F1", defaultFont.getReference().get());
+	auto defaultFontRef = defaultFont.getReference();
+	fonts.addItem("F1", defaultFontRef.get());
 
 	vector<unique_ptr<Reference>> pageRefs;
 
@@ -61,13 +65,17 @@ Document::writePDFOutput(Writer &writer)
 		/* page definition dictionary */
 		IndirectObject<Dictionary> pageDef;
 		pageDef.getInner().addItem("Type", new Name("Page"));
-		pageDef.getInner().addItem("Parent", pages.getReference().get());
 
-		pageDef.getInner().addItem("MediaBox", new Literal("[0 0 612 792]"));
-		writer.writeEOL();
+		auto pagesRef = pages.getReference();
+		pageDef.getInner().addItem("Parent", pagesRef.get());
 
-		pageDef.getInner().addItem("Contents", stream.getReference().get());
+		pageDef.getInner().addItem("MediaBox", new Literal("[0 0 612 792]\r\n"));
+
+		auto streamRef = stream.getReference();
+		pageDef.getInner().addItem("Contents", streamRef.get());
 		pageDef.getInner().addItem("Resources", &resources);
+
+		pageDef.writePDFOutput(writer);
 
 		/* PDF::Objects::Reference needs to survive this block */
 		pageRefs.push_back(move(pageDef.getReference()));
@@ -85,5 +93,6 @@ Document::writePDFOutput(Writer &writer)
 	trailer.writePDFOutput(writer);
 
 	writer.writeXrefTable();
+	writer.writeStartXref();
 	writer.writeEOF();
 }

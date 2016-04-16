@@ -8,6 +8,7 @@ OBJS=qutepdf.o\
 	BoxModel/Box.o\
 	BoxModel/Char.o\
 	BoxModel/HorizontalGlue.o\
+	BoxModel/LineBreak.o\
 	BoxModel/Penalty.o\
 	DocumentModel/Document.o\
 	DocumentModel/Elements/Container.o\

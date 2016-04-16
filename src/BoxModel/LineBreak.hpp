@@ -2,16 +2,18 @@
 
 #include "Box.hpp"
 
+using namespace std;
+
 
 namespace BoxModel
 {
-	class HorizontalGlue : public Box
+	class LineBreak : public Box
 	{
 	public:
-		HorizontalGlue();
+		LineBreak();
 
 		void dump();
 		void writePSOutput(ostream &out);
-		BoxType getType(); 
+		BoxType getType();
 	};
 }

@@ -12,5 +12,5 @@ Penalty::Penalty(int value) : Box(0, 0)
 BoxType
 Penalty::getType()
 {
-	return BoxType::Penalty;
+	return BoxType::PenaltyBox;
 }

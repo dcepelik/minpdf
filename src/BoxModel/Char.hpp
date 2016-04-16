@@ -14,6 +14,8 @@ namespace BoxModel
 	public:
 		Char(char c);
 
+		void dump();
 		BoxType getType(); 
+		void writePSOutput(ostream &out);
 	};
 }
