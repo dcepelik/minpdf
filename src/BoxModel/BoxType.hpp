@@ -7,6 +7,7 @@ namespace BoxModel
 		CharBox,
 		HorizontalGlueBox,
 		PenaltyBox,
-		LineBreakBox
+		LineBreakBox,
+		ParagraphBox
 	};
 }

@@ -21,28 +21,34 @@ Renderer::render(vector<shared_ptr<Box>> &boxes)
 {
 	int maxLineWidth = 612;
 
-	(*boxes.begin())->setBadness(0);
+	auto initGlueIterator = boxes.insert(
+		boxes.begin(),
+		shared_ptr<Box>(new HorizontalGlue())
+	);
+	(*initGlueIterator)->setBadness(0);
 
 	shared_ptr<Box> lastBreak;
 	for (auto l = boxes.begin(); l != boxes.end(); l++) {
-		if ((*l)->getType() == HorizontalGlueBox) {
-			int width = 0;
+		if ((*l)->getType() != HorizontalGlueBox)
+			continue;
 
-			for (auto r = l + 1; r < boxes.end(); r++) {
-				width += (*r)->getWidth();
+		int width = 0;
 
-				if ((*r)->getType() == HorizontalGlueBox) {
-					int badness = (maxLineWidth - width)
-						* (maxLineWidth - width);
+		for (auto r = l + 1; r < boxes.end(); r++) {
+			width += (*r)->getWidth();
 
-					/* relax the edge */
-					if ((*r)->getBadness() > (*l)->getBadness() + badness) {
-						(*r)->setBadness((*l)->getBadness() + badness);
-						(*r)->setPrev(*l);
+			if ((*r)->getType() != HorizontalGlueBox)
+				continue;
 
-						lastBreak = (*l);
-					}
-				}
+			int badness = (maxLineWidth - width)
+				* (maxLineWidth - width);
+
+			/* relax the edge */
+			if ((*r)->getBadness() > (*l)->getBadness() + badness) {
+				(*r)->setBadness((*l)->getBadness() + badness);
+				(*r)->setPrev(*l);
+
+				lastBreak = (*l);
 			}
 		}
 	}
@@ -57,6 +63,8 @@ Renderer::render(vector<shared_ptr<Box>> &boxes)
 
 	auto lastEnd = boxes.begin();
 
+	boxes.erase(initGlueIterator);
+
 	int count = 0;
 	int width = 0;
 
@@ -67,21 +75,19 @@ Renderer::render(vector<shared_ptr<Box>> &boxes)
 		else {
 			width += (*r)->getWidth();
 
-			if ((*r)->getType() == LineBreakBox) {
-				int avg = 0;
-				if (count > 0)
-					avg = (maxLineWidth - width) / count;
+			if ((*r)->getType() != LineBreakBox)
+				continue;
 
-				for (auto l = lastEnd; l != r; l++) {
-					if ((*l)->getType() == HorizontalGlueBox) {
-						(*l)->setWidth(avg);
-						cout << "Sirka " << width << ", pr " << avg << endl;
-					}
-				}
+			int avg = 0;
+			if (count > 0)
+				avg = (maxLineWidth - width) / count;
 
-				lastEnd = r;
-				count = width = 0;
-			}
+			for (auto l = lastEnd; l != r; l++)
+				if ((*l)->getType() == HorizontalGlueBox)
+					(*l)->setWidth(avg);
+
+			lastEnd = r;
+			count = width = 0;
 		}
 	}
 }

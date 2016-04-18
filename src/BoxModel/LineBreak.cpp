@@ -25,5 +25,5 @@ LineBreak::writePSOutput(ostream &out)
 void
 LineBreak::dump()
 {
-	cout << "###########" << endl;
+	cout << "\\n" << endl;
 }

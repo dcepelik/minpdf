@@ -24,12 +24,18 @@ TextNode::TextNode(string text) : Element("text")
 void
 TextNode::expand(vector<shared_ptr<Box>> &boxes)
 {
+	bool pushGlue = false;
+
 	for (uint i = 0; i < text.length(); i++) {
 		if (Parser::isWhiteChar(text[i])) {
-			boxes.push_back(shared_ptr<Box>(new HorizontalGlue()));
+			if (pushGlue)
+				boxes.push_back(shared_ptr<Box>(new HorizontalGlue()));
+
+			pushGlue = false;
 		}
 		else {
 			boxes.push_back(shared_ptr<Box>(new Char(text[i])));
+			pushGlue = true;
 		}
 	}
 }
