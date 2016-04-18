@@ -7,6 +7,7 @@ PROG=qutepdf
 OBJS=qutepdf.o\
 	BoxModel/Box.o\
 	BoxModel/Char.o\
+	BoxModel/HList.o\
 	BoxModel/HorizontalGlue.o\
 	BoxModel/LineBreak.o\
 	BoxModel/Penalty.o\
