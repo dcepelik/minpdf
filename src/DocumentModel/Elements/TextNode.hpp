@@ -19,7 +19,7 @@ namespace DocumentModel
 
 		public:
 			TextNode(string text);
-			virtual void expand(vector<shared_ptr<Box>> &boxes);
+			virtual void render(vector<shared_ptr<Box>> &boxes);
 			virtual void dump(int level = 0);
 			virtual bool empty();
 		};

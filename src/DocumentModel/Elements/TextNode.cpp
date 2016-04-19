@@ -22,7 +22,7 @@ TextNode::TextNode(string text) : Element("text")
 
 
 void
-TextNode::expand(vector<shared_ptr<Box>> &boxes)
+TextNode::render(vector<shared_ptr<Box>> &boxes)
 {
 	bool pushGlue = false;
 

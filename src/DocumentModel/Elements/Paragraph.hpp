@@ -10,6 +10,11 @@ namespace DocumentModel
 	{
 		class Paragraph : public Container
 		{
+		public:
+			Paragraph();
+
+			virtual void render(vector<shared_ptr<Box>> &boxes)
+				override;
 		};
 	}
 }

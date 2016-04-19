@@ -2,15 +2,17 @@
 
 #include <vector>
 
-#include "Box.hpp"
+#include "Container.hpp"
 
 namespace BoxModel
 {
-	class HList : public Box
+	class HList : public Container
 	{
 		vector<shared_ptr<Box>> items;
 
 	public:
+		HList();
+
 		BoxType getType();
 		void writePSOutput(ostream &out);
 		void dump();

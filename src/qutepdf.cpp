@@ -7,6 +7,7 @@
 #include "PDF/Objects/Object.hpp"
 #include "Input/Parser.hpp"
 #include "Renderer.hpp"
+#include "DocumentModel/Elements/Paragraph.hpp"
 
 using namespace std;
 using namespace Input;
@@ -47,12 +48,10 @@ main(int argc, char *argv[]) {
 
 	buf.close();
 
-	Renderer *renderer = new Renderer();
-	
 	vector<shared_ptr<Box>> boxes;
-	doc->expand(boxes);
+	doc->render(boxes);
 
-	renderer->render(boxes);
+	doc->dump();
 
 	stringstream ps;
 	ps << "0 752 Td\r\n";
@@ -68,7 +67,6 @@ main(int argc, char *argv[]) {
 
 	Writer writer(ofs);
 	pdfDoc->writePDFOutput(writer);
-
 
 	cout << "Done." << endl;
 

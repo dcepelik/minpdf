@@ -25,7 +25,7 @@ Element::addChild(shared_ptr<Element> child)
 
 
 void
-Element::expand(vector<shared_ptr<Box>> &boxes)
+Element::render(vector<shared_ptr<Box>> &boxes)
 {
 	/* by default, element will not produce any boxes */
 	(void)boxes;

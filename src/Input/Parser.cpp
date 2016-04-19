@@ -99,14 +99,25 @@ Parser::parseElement()
 {
 	string name = parseName();
 
-	shared_ptr<Container> container(new Container(name));
-	parseChildren(container);
+	/*
+	 * some names are reserved and treated differently
+	 */
+	Element *el;
+	if (name == "p") {
+		el = new Paragraph();
+	}
+	else {
+		el = new Container(name);
+	}
+
+	shared_ptr<Element> elPtr(el);
+	parseChildren(elPtr);
 
 	if (stream.get() != Parser::ElementEnd) {
 		throw new ParseError("Parse error: missing " + Parser::ElementEnd);
 	}
 
-	return container;
+	return elPtr;
 }
 
 

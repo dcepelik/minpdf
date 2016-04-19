@@ -5,7 +5,7 @@
 using namespace BoxModel;
 
 
-Char::Char(char c) : Box(15, 30)
+Char::Char(char c) : Box(13, 25)
 {
 	this->c = c;
 }
@@ -30,5 +30,5 @@ void
 Char::writePSOutput(ostream &out)
 {
 	out << "/F1 24 Tf\r\n(" << c << ") Tj\r\n";
-	out << "15 0 Td\r\n";
+	out << width << " 0 Td\r\n";
 }

@@ -24,7 +24,7 @@ namespace DocumentModel
 
 			virtual void addChild(shared_ptr<Element> child);
 
-			virtual void expand(vector<shared_ptr<Box>> &boxes);
+			virtual void render(vector<shared_ptr<Box>> &boxes);
 			virtual void dump(int level = 0);
 			virtual void removeEmptyChildren();
 			virtual bool empty();

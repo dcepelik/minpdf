@@ -14,6 +14,5 @@ namespace DocumentModel
 	{
 	public:
 		Document();
-		void expand();
 	};
 }

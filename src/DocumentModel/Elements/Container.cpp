@@ -19,10 +19,10 @@ Container::addChild(shared_ptr<Element> child)
 
 
 void
-Container::expand(vector<shared_ptr<Box>> &boxes)
+Container::render(vector<shared_ptr<Box>> &boxes)
 {
 	for (auto it = children.begin(); it != children.end(); it++) {
-		(*it)->expand(boxes);
+		(*it)->render(boxes);
 	}
 }
 

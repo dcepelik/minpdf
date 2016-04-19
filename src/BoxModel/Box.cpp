@@ -21,7 +21,14 @@ Box::setOrigin(int originX, int originY)
 int
 Box::getWidth()
 {
-	return this->width;
+	return width;
+}
+
+
+int
+Box::getHeight()
+{
+	return height;
 }
 
 
@@ -35,7 +42,7 @@ Box::setWidth(int width)
 int
 Box::getBadness()
 {
-	return this->badness;
+	return badness;
 }
 
 
@@ -49,7 +56,7 @@ Box::setBadness(int badness)
 shared_ptr<Box>
 Box::getPrev()
 {
-	return this->prev;
+	return prev;
 }
 
 

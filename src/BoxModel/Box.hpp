@@ -25,7 +25,7 @@ namespace BoxModel
 		void setOrigin(int originX, int originY);
 
 		virtual BoxType getType() = 0;
-		virtual void writePSOutput(ostream &out);
+		virtual void writePSOutput(ostream &out) = 0;
 		virtual void dump() = 0;
 
 		int getWidth();

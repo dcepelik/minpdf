@@ -16,6 +16,7 @@ namespace DocumentModel
 	{
 		class Container : public Element
 		{
+		protected:
 			string name;
 			vector<shared_ptr<Element>> children;
 
@@ -24,7 +25,7 @@ namespace DocumentModel
 
 			void addChild(shared_ptr<Element> child);
 
-			void expand(vector<shared_ptr<Box>> &boxes);
+			virtual void render(vector<shared_ptr<Box>> &boxes);
 			virtual void dump(int level = 0);
 			virtual void removeEmptyChildren();
 			virtual bool empty();
