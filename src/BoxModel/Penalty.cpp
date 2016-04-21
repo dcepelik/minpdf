@@ -7,10 +7,3 @@ Penalty::Penalty(int value) : Box(0, 0)
 {
 	this->value = value;
 }
-
-
-BoxType
-Penalty::getType()
-{
-	return BoxType::PenaltyBox;
-}

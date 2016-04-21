@@ -10,14 +10,6 @@ Box::Box(int width, int height)
 }
 
 
-void
-Box::setOrigin(int originX, int originY)
-{
-	this->originX = originX;
-	this->originY = originY;
-}
-
-
 int
 Box::getWidth()
 {
@@ -32,24 +24,10 @@ Box::getHeight()
 }
 
 
-void
-Box::setWidth(int width)
-{
-	this->width = width;
-}
-
-
 int
 Box::getBadness()
 {
 	return badness;
-}
-
-
-void
-Box::setBadness(int badness)
-{
-	this->badness = badness;
 }
 
 
@@ -61,14 +39,29 @@ Box::getPrev()
 
 
 void
+Box::setWidth(int width)
+{
+	this->width = width;
+}
+
+
+void
+Box::setHeight(int height)
+{
+	this->height = height;
+}
+
+
+void
+Box::setBadness(int badness)
+{
+	this->badness = badness;
+}
+
+
+void
 Box::setPrev(shared_ptr<Box> prev)
 {
 	this->prev = prev;
 }
 
-
-void
-Box::writePSOutput(ostream &out)
-{
-	(void)out;
-}

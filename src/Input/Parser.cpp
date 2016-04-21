@@ -73,7 +73,7 @@ Parser::parseChildren(shared_ptr<Element> parent)
 
 				case Parser::ElementBegin:
 					processTextNode(parent);
-					parent->addChild(parseElement());
+					parent->addChild(parseElement(parent));
 					break;
 
 				case Parser::ElementEnd:
@@ -95,7 +95,7 @@ Parser::parseChildren(shared_ptr<Element> parent)
 
 
 shared_ptr<Element>
-Parser::parseElement()
+Parser::parseElement(shared_ptr<Element> parent)
 {
 	string name = parseName();
 
@@ -104,17 +104,17 @@ Parser::parseElement()
 	 */
 	Element *el;
 	if (name == "p") {
-		el = new Paragraph();
+		el = new Paragraph(parent);
 	}
 	else {
-		el = new Container(name);
+		el = new Container(parent, name);
 	}
 
 	shared_ptr<Element> elPtr(el);
 	parseChildren(elPtr);
 
 	if (stream.get() != Parser::ElementEnd) {
-		throw new ParseError("Parse error: missing " + Parser::ElementEnd);
+		throw new ParseError("Parse error: missing }");
 	}
 
 	return elPtr;
@@ -125,7 +125,7 @@ void
 Parser::processTextNode(shared_ptr<Element> parent)
 {
 	if (textbuf.str().size() > 0) {
-		shared_ptr<TextNode> node(new TextNode(textbuf.str()));
+		shared_ptr<TextNode> node(new TextNode(parent, textbuf.str()));
 		parent->addChild(node);
 
 		textbuf.str(string());

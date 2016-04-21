@@ -78,7 +78,7 @@ Document::writePDFOutput(Writer &writer)
 		pageDef.writePDFOutput(writer);
 
 		/* PDF::Objects::Reference needs to survive this block */
-		pageRefs.push_back(move(pageDef.getReference()));
+		pageRefs.push_back(pageDef.getReference());
 	}
 
 	for (auto &pageRef: pageRefs) {

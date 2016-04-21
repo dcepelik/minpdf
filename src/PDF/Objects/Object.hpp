@@ -13,6 +13,7 @@ namespace PDF
 	{
 		class Object
 		{
+		protected:
 			/* @see http://stackoverflow.com/questions/9702053 */
 			static int counter;
 

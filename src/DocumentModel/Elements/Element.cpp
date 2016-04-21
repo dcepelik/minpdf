@@ -2,16 +2,17 @@
 #include <stdexcept>
 #include <string>
 
+#include "DocumentModel/Document.hpp"
 #include "Element.hpp"
-#include "BoxModel/Box.hpp"
 
-using namespace BoxModel;
 using namespace DocumentModel::Elements;
+using namespace DocumentModel;
 using namespace std;
 
 
-Element::Element(string name)
+Element::Element(shared_ptr<Element> parent, string name)
 {
+	this->parent = parent;
 	this->name = name;
 }
 
@@ -21,6 +22,30 @@ Element::addChild(shared_ptr<Element> child)
 {
 	(void)child;
 	throw new domain_error("Cannot add children to non-containers");
+}
+
+
+shared_ptr<Element>
+Element::getParent()
+{
+	return parent;
+}
+
+
+Document *
+Element::getDocument()
+{
+	shared_ptr<Element> p = parent;
+	while (p.get() != NULL) {
+		Document *doc;
+		if ((doc = dynamic_cast<Document *>(p.get()))) {
+			return doc;
+		}
+
+		p = p->getParent();
+	}
+
+	return NULL;
 }
 
 

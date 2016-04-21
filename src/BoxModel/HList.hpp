@@ -1,22 +1,22 @@
 #pragma once
 
-#include <vector>
+#include "List.hpp"
 
-#include "Container.hpp"
+using namespace std;
+
 
 namespace BoxModel
 {
-	class HList : public Container
+	class HList : public List
 	{
-		vector<shared_ptr<Box>> items;
+	protected:
+		int getBoxSize(shared_ptr<Box> el);
+		int getMaxListSize();
 
 	public:
-		HList();
+		HList(int size);
 
-		BoxType getType();
-		void writePSOutput(ostream &out);
-		void dump();
-
-		void addItem(shared_ptr<Box> item);
+		void dump(ostream &out, int level = 0);
+		void writePSOutput(PS::Writer &writer);
 	};
 }

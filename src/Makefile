@@ -1,17 +1,20 @@
 .PHONY: clean
 
 CC=g++
-CFLAGS=-c -std=c++17 -Wall -Wextra --pedantic -g -I$(CURDIR)
+CFLAGS=-c -std=c++14 -Wall -Wextra --pedantic -g -I$(CURDIR)
 LDFLAGS=-Wall -Wextra --pedantic
 PROG=qutepdf
 OBJS=qutepdf.o\
-	BoxModel/Box.o\
 	BoxModel/Char.o\
 	BoxModel/Container.o\
+	BoxModel/Box.o\
+	BoxModel/Glue.o\
+	BoxModel/Glue.o\
+	BoxModel/HGlue.o\
 	BoxModel/HList.o\
-	BoxModel/HorizontalGlue.o\
-	BoxModel/LineBreak.o\
+	BoxModel/List.o\
 	BoxModel/Penalty.o\
+	BoxModel/VGlue.o\
 	DocumentModel/Document.o\
 	DocumentModel/Elements/Container.o\
 	DocumentModel/Elements/Element.o\
@@ -30,7 +33,9 @@ OBJS=qutepdf.o\
 	PDF/Objects/Stream.o\
 	PDF/Page.o\
 	PDF/Writer.o\
-	Renderer.o
+	PS/Writer.o\
+	Styles/Style.o\
+	Styles/StyleTable.o\
 
 $(PROG): $(OBJS)
 	$(CC) $(LDFLAGS) -o $(PROG) $^

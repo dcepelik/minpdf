@@ -5,30 +5,28 @@
 using namespace BoxModel;
 
 
-Char::Char(char c) : Box(13, 25)
+Char::Char(char c, string fontFamily, int fontSize)
 {
 	this->c = c;
+	this->fontFamily = fontFamily;
+	this->fontSize = fontSize;
+
+	width = fontSize / 2;
+	height = fontSize * 1.2;
 }
 
 
 void
-Char::dump()
+Char::dump(ostream &out, int level)
 {
-	cout << c;
+	out << c;
 }
-
-
-BoxType
-Char::getType()
-{
-	return BoxType::CharBox;
-}
-
 
 
 void
-Char::writePSOutput(ostream &out)
-{
-	out << "/F1 24 Tf\r\n(" << c << ") Tj\r\n";
-	out << width << " 0 Td\r\n";
+Char::writePSOutput(PS::Writer &writer)
+{	
+	writer.writeTf(fontFamily, fontSize);
+	writer.writeTj(string(1, c));
+	writer.writeTd(this->width, 0);
 }

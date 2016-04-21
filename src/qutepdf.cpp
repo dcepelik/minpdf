@@ -3,19 +3,22 @@
 #include <iostream>
 #include <vector>
 
-#include "PDF/Writer.hpp"
-#include "PDF/Objects/Object.hpp"
+#include "BoxModel/Box.hpp"
 #include "Input/Parser.hpp"
-#include "Renderer.hpp"
+#include "PDF/Writer.hpp"
+#include "PDF/Document.hpp"
+#include "PS/Writer.hpp"
+#include "PDF/Objects/Object.hpp"
 #include "DocumentModel/Elements/Paragraph.hpp"
 
-using namespace std;
+using namespace BoxModel;
 using namespace Input;
+using namespace std;
 
 
 void
 usage(string argv0) {
-	cerr << argv0 << ": usage: " << argv0 << " <input_file> <output_file>"
+	cout << argv0 << ": usage: " << argv0 << " <input_file> <output_file>"
 		<< endl;
 }
 
@@ -44,7 +47,16 @@ main(int argc, char *argv[]) {
 
 	istream stream(&buf);
 	Parser p(stream);
-	shared_ptr<Element> doc = p.parseDocument();
+	shared_ptr<DocumentModel::Document> doc = p.parseDocument();
+
+	shared_ptr<Style> defaultStyle(new Style());
+	defaultStyle->fontFamily = "/F1";
+	defaultStyle->fontSize = 13;
+
+	shared_ptr<StyleTable> table(new StyleTable());
+	table->addStyle("p", defaultStyle);
+
+	doc->setStyleTable(table);
 
 	buf.close();
 
@@ -53,16 +65,18 @@ main(int argc, char *argv[]) {
 
 	doc->dump();
 
-	stringstream ps;
-	ps << "0 752 Td\r\n";
+	stringstream psStream;
+	psStream << "0 752 Td\r\n";
+
+	PS::Writer psWriter(psStream);
 	for (auto box: boxes) {
-		box->dump();
-		box->writePSOutput(ps);
+		box->dump(cerr);
+		box->writePSOutput(psWriter);
 	}
 	cout << endl;
 
 	shared_ptr<PDF::Document> pdfDoc(new PDF::Document);
-	shared_ptr<PDF::Page> pdfPage(new PDF::Page(ps.str()));
+	shared_ptr<PDF::Page> pdfPage(new PDF::Page(psStream.str()));
 	pdfDoc->addPage(pdfPage);
 
 	Writer writer(ofs);

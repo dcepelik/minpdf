@@ -4,11 +4,13 @@
 
 #include "Container.hpp"
 
+using namespace BoxModel;
+using namespace DocumentModel;
 using namespace DocumentModel::Elements;
 using namespace std;
 
 
-Container::Container(string name) : Element(name) {}
+Container::Container(shared_ptr<Element> parent, string name) : Element(parent, name) {}
 
 
 void

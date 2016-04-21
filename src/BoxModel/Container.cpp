@@ -15,13 +15,20 @@ Container::addChild(shared_ptr<Box> child)
 
 
 void
-Container::dump()
+Container::dump(ostream &out, int level)
 {
-	cout << "HList{ ";
-	
-	for (auto child: children) {
-		child->dump();
-	}
+	out << string('\t', level) << '{';
 
-	cout << " }";
+	for (auto child: children)
+		child->dump(out, level + 1);
+
+	out << string('\t', level) << '}';
+}
+
+
+void
+Container::writePSOutput(PS::Writer &writer)
+{
+	for (auto child: children)
+		child->writePSOutput(writer);
 }

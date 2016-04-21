@@ -10,12 +10,13 @@ namespace BoxModel
 	class Char : public Box
 	{
 		char c;
+		string fontFamily;
+		int fontSize;
 
 	public:
-		Char(char c);
+		Char(char c, string fontFamily, int fontSize);
 
-		void dump();
-		BoxType getType(); 
-		void writePSOutput(ostream &out);
+		void dump(ostream &out, int level = 0);
+		void writePSOutput(PS::Writer &writer);
 	};
 }

@@ -2,14 +2,17 @@
 
 #include <vector>
 
-#include "BoxModel/Box.hpp"
+#include "Box.hpp"
 
 using namespace std;
+
 
 namespace BoxModel
 {
 	class Container : public Box
 	{
+	protected:
+		/* my software protects the children */
 		vector<shared_ptr<Box>> children;
 
 	public:
@@ -17,6 +20,7 @@ namespace BoxModel
 
 		void addChild(shared_ptr<Box> child);
 
-		void dump();
+		virtual void dump(ostream &out, int level = 0);
+		virtual void writePSOutput(PS::Writer &writer);
 	};
 }

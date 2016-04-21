@@ -3,10 +3,10 @@
 #include <memory>
 #include <vector>
 
-#include "BoxModel/Box.hpp"
 #include "Element.hpp"
 
 using namespace BoxModel;
+using namespace DocumentModel;
 using namespace std;
 
 
@@ -21,7 +21,7 @@ namespace DocumentModel
 			vector<shared_ptr<Element>> children;
 
 		public:
-			Container(string name);
+			Container(shared_ptr<Element> parent, string name);
 
 			void addChild(shared_ptr<Element> child);
 

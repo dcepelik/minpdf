@@ -1,10 +1,13 @@
 #pragma once
 
+#include <climits>
 #include <iostream>
 #include <memory>
 
-#include "BoxType.hpp"
+#include "PS/Writer.hpp"
+#include "Styles/Style.hpp"
 
+using namespace Styles;
 using namespace std;
 
 namespace BoxModel
@@ -12,31 +15,26 @@ namespace BoxModel
 	class Box
 	{
 	protected:
-		int originX;
-		int originY;
-		int width = 0;
+		int width;
 		int height;
-		int badness = 1e8;
-		shared_ptr<Box> prev;
+
+		int badness = INT_MAX;		/* cost when breaking here */
+		shared_ptr<Box> prev;		/* previous division point */
 
 	public:
-		Box(int width, int height);
+		Box(int width = 0, int height = 0);
 
-		void setOrigin(int originX, int originY);
-
-		virtual BoxType getType() = 0;
-		virtual void writePSOutput(ostream &out) = 0;
-		virtual void dump() = 0;
+		virtual void dump(ostream &out, int level = 0) = 0;
+		virtual void writePSOutput(PS::Writer &writer) = 0;
 
 		int getWidth();
 		int getHeight();
-
 		int getBadness();
-		void setBadness(int badness);
-
 		shared_ptr<Box> getPrev();
-		void setPrev(shared_ptr<Box> prev);
 
 		void setWidth(int width);
+		void setHeight(int height);
+		void setBadness(int badness);
+		void setPrev(shared_ptr<Box> prev);
 	};
 }

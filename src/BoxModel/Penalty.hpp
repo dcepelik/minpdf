@@ -5,13 +5,11 @@
 
 namespace BoxModel
 {
-	class Penalty : Box
+	class Penalty : public Box
 	{
 		int value;
 
 	public:
 		Penalty(int value);
-
-		BoxType getType(); 
 	};
 }
