@@ -14,7 +14,6 @@
 #include "Writer.hpp"
 
 using namespace PDF::Objects;
-using namespace PDF;
 using namespace std;
 
 

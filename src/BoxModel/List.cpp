@@ -42,7 +42,7 @@ List::divideSpaces()
 
 	int totalGlueSize = maxSize - size;
 
-	int numFailed = 0;
+	vector<Glue *>::size_type numFailed = 0;
 	bool overstretch = false;
 
 	/* TODO: take care of cycles */

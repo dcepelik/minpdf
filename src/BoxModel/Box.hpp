@@ -18,7 +18,7 @@ namespace BoxModel
 		int width;
 		int height;
 
-		int badness = INT_MAX;		/* cost when breaking here */
+		int badness = 1e4;		/* cost when breaking here */
 		shared_ptr<Box> prev;		/* previous division point */
 
 	public:

@@ -104,10 +104,10 @@ Parser::parseElement(shared_ptr<Element> parent)
 	 */
 	Element *el;
 	if (name == "p") {
-		el = new Paragraph(parent);
+		el = new Paragraph(parent, 500); /* TODO */
 	}
 	else {
-		el = new Container(parent, name);
+		el = new DocumentModel::Elements::Container(parent, name);
 	}
 
 	shared_ptr<Element> elPtr(el);

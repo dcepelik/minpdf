@@ -5,10 +5,6 @@
 
 #include "BoxModel/Box.hpp"
 #include "Input/Parser.hpp"
-#include "PDF/Writer.hpp"
-#include "PDF/Document.hpp"
-#include "PS/Writer.hpp"
-#include "PDF/Objects/Object.hpp"
 #include "DocumentModel/Elements/Paragraph.hpp"
 
 using namespace BoxModel;
@@ -48,41 +44,22 @@ main(int argc, char *argv[]) {
 	istream stream(&buf);
 	Parser p(stream);
 	shared_ptr<DocumentModel::Document> doc = p.parseDocument();
+	buf.close();
+
+	//doc->dump();
 
 	shared_ptr<Style> defaultStyle(new Style());
 	defaultStyle->fontFamily = "/F1";
-	defaultStyle->fontSize = 13;
+	defaultStyle->fontSize = 11;
 
 	shared_ptr<StyleTable> table(new StyleTable());
 	table->addStyle("p", defaultStyle);
 
 	doc->setStyleTable(table);
 
-	buf.close();
+	doc->renderPDFOutput(ofs);
 
-	vector<shared_ptr<Box>> boxes;
-	doc->render(boxes);
-
-	doc->dump();
-
-	stringstream psStream;
-	psStream << "0 752 Td\r\n";
-
-	PS::Writer psWriter(psStream);
-	for (auto box: boxes) {
-		box->dump(cerr);
-		box->writePSOutput(psWriter);
-	}
-	cout << endl;
-
-	shared_ptr<PDF::Document> pdfDoc(new PDF::Document);
-	shared_ptr<PDF::Page> pdfPage(new PDF::Page(psStream.str()));
-	pdfDoc->addPage(pdfPage);
-
-	Writer writer(ofs);
-	pdfDoc->writePDFOutput(writer);
-
-	cout << "Done." << endl;
+	cout << endl << "Done." << endl;
 
 	return EXIT_SUCCESS;
 }

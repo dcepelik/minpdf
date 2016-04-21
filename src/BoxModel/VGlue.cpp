@@ -24,12 +24,12 @@ VGlue::setActualSize(int size)
 void
 VGlue::dump(ostream &out, int level)
 {
-	cout << endl << string('\t', level) << string('^', cardinality) << endl;
+	out << string(level, '\t') << '^' << cardinality << '^' << endl;
 }
 
 
 void
 VGlue::writePSOutput(PS::Writer &writer)
 {
-	/* TODO */
+	writer.writeTd(0, -height);
 }

@@ -7,14 +7,14 @@ using namespace std;
 
 namespace BoxModel
 {
-	class HList : public List
+	class VList : public List
 	{
 	protected:
 		int getBoxSize(shared_ptr<Box> box);
 		int getMaxListSize();
 
 	public:
-		HList(int size);
+		VList(int size);
 
 		void dump(ostream &out, int level = 0);
 		void writePSOutput(PS::Writer &writer);

@@ -10,7 +10,8 @@ HGlue::HGlue(int cardinality, int size, int shrink, int stretch)
 void
 HGlue::dump(ostream &out, int level)
 {
-	cout << "<-" << string(cardinality, '-') << '>';
+	(void)level;
+	out << "<-" << string(cardinality, '-') << '>';
 }
 
 

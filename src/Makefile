@@ -1,25 +1,30 @@
 .PHONY: clean
 
-CC=g++
+CC=clang++
 CFLAGS=-c -std=c++14 -Wall -Wextra --pedantic -g -I$(CURDIR)
 LDFLAGS=-Wall -Wextra --pedantic
 PROG=qutepdf
 OBJS=qutepdf.o\
+	BoxModel/Box.o\
 	BoxModel/Char.o\
 	BoxModel/Container.o\
-	BoxModel/Box.o\
 	BoxModel/Glue.o\
 	BoxModel/Glue.o\
+	BoxModel/HGlue.o\
 	BoxModel/HGlue.o\
 	BoxModel/HList.o\
 	BoxModel/List.o\
 	BoxModel/Penalty.o\
 	BoxModel/VGlue.o\
+	BoxModel/VList.o\
 	DocumentModel/Document.o\
 	DocumentModel/Elements/Container.o\
 	DocumentModel/Elements/Element.o\
+	DocumentModel/Elements/HWrappingContainer.o\
 	DocumentModel/Elements/Paragraph.o\
 	DocumentModel/Elements/TextNode.o\
+	DocumentModel/Elements/VWrappingContainer.o\
+	DocumentModel/Elements/WrappingContainer.o\
 	Input/ParseError.o\
 	Input/Parser.o\
 	PDF/Document.o\

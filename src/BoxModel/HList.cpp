@@ -3,13 +3,16 @@
 using namespace BoxModel;
 
 
-HList::HList(int maxSize) : List(maxSize) {};
+HList::HList(int maxSize) : List(maxSize)
+{
+	this->height = 8;
+};
 
 
 int
-HList::getBoxSize(shared_ptr<Box> el)
+HList::getBoxSize(shared_ptr<Box> box)
 {
-	return el->getWidth();
+	return box->getWidth();
 }
 
 
@@ -28,7 +31,7 @@ HList::dump(ostream &out, int level)
 	for (auto child: children)
 		child->dump(out, level + 1);
 
-	out << string(level, '\t') << ']' << endl;
+	out << ']' << endl;
 }
 
 
@@ -38,5 +41,5 @@ HList::writePSOutput(PS::Writer &writer)
 	divideSpaces();
 
 	List::writePSOutput(writer);
-	writer.writeTd(-getMaxListSize(), -15); /* TODO */
+	writer.writeTd(-getMaxListSize(), -height); /* TODO */
 }

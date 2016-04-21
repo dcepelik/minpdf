@@ -1,9 +1,8 @@
 #pragma once
 
 #include <string>
-#include "Container.hpp"
+#include "HWrappingContainer.hpp"
 
-using namespace BoxModel;
 using namespace DocumentModel;
 using namespace std;
 
@@ -12,13 +11,10 @@ namespace DocumentModel
 {
 	namespace Elements
 	{
-		class Paragraph : public Container
+		class Paragraph : public HWrappingContainer
 		{
 		public:
-			Paragraph(shared_ptr<Element> parent);
-
-			virtual void render(vector<shared_ptr<Box>> &boxes)
-				override;
+			Paragraph(shared_ptr<Element> parent, int width);
 		};
 	}
 }

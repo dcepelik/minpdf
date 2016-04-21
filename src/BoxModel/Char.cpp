@@ -19,6 +19,7 @@ Char::Char(char c, string fontFamily, int fontSize)
 void
 Char::dump(ostream &out, int level)
 {
+	(void)level;
 	out << c;
 }
 

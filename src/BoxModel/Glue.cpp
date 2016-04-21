@@ -40,7 +40,7 @@ int
 Glue::getMaxSize()
 {
 	if (cardinality > 0)
-		return INT_MAX;
+		return INT_MAX / 2;
 
 	return size + stretch;
 }
