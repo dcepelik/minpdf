@@ -17,9 +17,24 @@ namespace PDF
 			vector<Object *> children;
 
 		public:
-			void addChild(Object *obj);
+			void writePDFOutput(Writer &writer)
+			{
+				writer.writeLine("[");
+				writer.increaseIndent();
 
-			void writePDFOutput(Writer &writer);
+				for (auto child: children) {
+					child->writePDFOutput(writer);
+				}
+
+				writer.decreaseIndent();
+				writer.writeLine("]");
+			}
+
+
+			void addChild(Object *obj)
+			{
+				children.push_back(obj);
+			}
 		};
 	}
 

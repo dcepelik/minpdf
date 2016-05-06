@@ -18,7 +18,11 @@ namespace PDF
 			static int counter;
 
 		public:
-			static int objectCount();
+			static int objectCount()
+			{
+				return counter;
+			}
+
 
 			virtual void writePDFOutput(Writer &writer) = 0;
 		};

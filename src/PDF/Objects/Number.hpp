@@ -13,9 +13,16 @@ namespace PDF
 			int number;
 
 		public:
-			Number(int number);
+			Number(int number)
+			{
+				this->number = number;
+			}
 
-			void writePDFOutput(Writer &writer);
+
+			void writePDFOutput(Writer &writer)
+			{
+				writer.writeLine(to_string(number));
+			}
 		};
 	}
 }

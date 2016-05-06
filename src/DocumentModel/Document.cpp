@@ -9,25 +9,6 @@
 namespace DM = DocumentModel;
 
 
-DM::Document::Document() : VWrappingContainer(shared_ptr<Element>(this), "document", 762)
-{
-}
-
-
-void
-DM::Document::setStyleTable(shared_ptr<StyleTable> styleTable)
-{
-	this->styleTable = styleTable;
-}
-
-
-shared_ptr<StyleTable>
-DM::Document::getStyleTable()
-{
-	return styleTable;
-}
-
-
 void
 DM::Document::renderPDFOutput(ostream &out)
 {

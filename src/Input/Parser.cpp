@@ -13,31 +13,6 @@ using namespace Input;
 using namespace std;
 
 
-bool
-Parser::isControlChar(char c)
-{
-	return c == Parser::EscapeChar
-		|| c == Parser::ElementBegin
-		|| c == Parser::ElementEnd;
-}
-
-
-bool
-Parser::isWhiteChar(char c)
-{
-	return c == '\t'
-		|| c == '\r'
-		|| c == '\n'
-		|| c == ' ';
-}
-
-
-Parser::Parser(istream &stream) : stream(stream)
-{
-	textbuf = stringstream();
-}
-
-
 shared_ptr<Document>
 Parser::parseDocument()
 {

@@ -1,11 +1,14 @@
 #pragma once
 
 #include <string>
+#include <regex>
 
 #include "BoxModel/Box.hpp"
 #include "Element.hpp"
+#include "Input/Parser.hpp"
 
 using namespace BoxModel;
+using namespace Input;
 using namespace std;
 
 
@@ -18,11 +21,37 @@ namespace DocumentModel
 			string text;
 
 		public:
-			TextNode(shared_ptr<Element> parent, string text);
+			TextNode(shared_ptr<Element> parent, string text)
+				: Element(parent, "text")
+			{
+				this->text = text;
+			}
+
 
 			virtual void render(vector<shared_ptr<Box>> &boxes);
-			virtual void dump(int level = 0);
-			virtual bool empty();
+
+
+			void dump(int level)
+			{
+				string replaced;
+				replaced = regex_replace(text, regex("\\n"), "\\n");
+				replaced = regex_replace(replaced, regex("\\t"), "\\t");
+
+				cout << string(level, '\t') << "\"" << replaced
+					<< "\"" << endl;
+			}
+
+
+			bool empty()
+			{
+				for (uint i = 0; i < text.length(); i++) {
+					if (!Parser::isWhiteChar(text[i])) {
+						return false;
+					}
+				}
+
+				return true;
+			}
 		};
 	}
 }

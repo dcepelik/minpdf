@@ -8,13 +8,6 @@
 using namespace DocumentModel::Elements;
 
 
-WrappingContainer::WrappingContainer(shared_ptr<Element> parent, string name,
-	int maxSize) : Container(parent, name)
-{
-	this->maxSize = maxSize;
-}
-
-
 void
 WrappingContainer::render(vector<shared_ptr<Box>> &boxes)
 {

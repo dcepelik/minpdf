@@ -13,8 +13,15 @@ namespace Input
 		const char *msg;
 
 	public:
-		ParseError(const char *msg);
+		ParseError(const char *msg)
+		{
+			this->msg = msg;
+		}
 
-		virtual const char *what() const throw();
+
+		const char *what() const throw()
+		{
+			return msg;
+		}
 	};
 }

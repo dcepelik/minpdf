@@ -22,19 +22,55 @@ namespace BoxModel
 		shared_ptr<Box> prev;		/* previous division point */
 
 	public:
-		Box(int width = 0, int height = 0);
+		Box(int width = 0, int height = 0)
+		{
+			this->width = width;
+			this->height = height;
+		}
+
 
 		virtual void dump(ostream &out, int level = 0) = 0;
 		virtual void writePSOutput(PS::Writer &writer) = 0;
 
-		int getWidth();
-		int getHeight();
-		int getBadness();
-		shared_ptr<Box> getPrev();
 
-		void setWidth(int width);
-		void setHeight(int height);
-		void setBadness(int badness);
-		void setPrev(shared_ptr<Box> prev);
+		int getWidth()
+		{
+			return width;
+		}
+
+		int getHeight()
+		{
+			return height;
+		}
+
+		int getBadness()
+		{
+			return badness;
+		}
+
+		shared_ptr<Box> getPrev()
+		{
+			return prev;
+		}
+
+		void setWidth(int width)
+		{
+			this->width = width;
+		}
+
+		void setHeight(int height)
+		{
+			this->height = height;
+		}
+
+		void setBadness(int badness)
+		{
+			this->badness = badness;
+		}
+
+		void setPrev(shared_ptr<Box> prev)
+		{
+			this->prev = prev;
+		}
 	};
 }

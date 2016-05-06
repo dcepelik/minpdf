@@ -1,6 +1,9 @@
 #pragma once
 
 #include "WrappingContainer.hpp"
+#include "BoxModel/HGlue.hpp"
+#include "BoxModel/VGlue.hpp"
+#include "BoxModel/VList.hpp"
 
 
 namespace DocumentModel
@@ -10,17 +13,43 @@ namespace DocumentModel
 		class VWrappingContainer : public WrappingContainer
 		{
 		protected:
-			int getBoxSize(shared_ptr<Box> box);
-			shared_ptr<Glue> createNewInfGlue();
+			int getBoxSize(shared_ptr<Box> box)
+			{
+				return box->getHeight();
+			}
+
+
+			shared_ptr<Glue> createNewInfGlue()
+			{
+				return shared_ptr<Glue>(new VGlue(1, 0, 0, 0));
+			}
+
+
 			shared_ptr<List> createNewList(
 				vector<shared_ptr<Box>>::iterator begin,
 				vector<shared_ptr<Box>>::iterator end
-			);
-			shared_ptr<Glue> createNewInterlineGlue();
+			) {
+				VList *list = new VList(maxSize);
+
+				for (auto it = begin; it != end; it++)
+					list->addChild(*it);
+
+				return shared_ptr<List>(list);
+			}
+
+
+			shared_ptr<Glue> createNewInterlineGlue()
+			{
+				return shared_ptr<Glue>(new HGlue(0, 0, 0, 0));
+			}
 
 		public:
 			VWrappingContainer(shared_ptr<Element> parent,
-				string name, int width);
+				string name, int width)
+				: WrappingContainer(parent, name, width)
+			{
+			};
+
 		};
 	}
 }

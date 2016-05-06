@@ -17,11 +17,22 @@ namespace DocumentModel
 		shared_ptr<StyleTable> styleTable;
 
 	public:
-		Document();
+		Document() : VWrappingContainer(shared_ptr<Element>(this), "document", 762)
+		{
+		}
 
-		void setStyleTable(shared_ptr<StyleTable> styleTable);
 
-		shared_ptr<StyleTable> getStyleTable();
+		void setStyleTable(shared_ptr<StyleTable> styleTable)
+		{
+			this->styleTable = styleTable;
+		}
+
+
+		shared_ptr<StyleTable> getStyleTable()
+		{
+			return styleTable;
+		}
+
 
 		void renderPDFOutput(ostream &out);
 	};

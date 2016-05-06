@@ -14,7 +14,10 @@ namespace DocumentModel
 		class Paragraph : public HWrappingContainer
 		{
 		public:
-			Paragraph(shared_ptr<Element> parent, int width);
+			Paragraph(shared_ptr<Element> parent, int width)
+				: HWrappingContainer(parent, "p", width)
+			{
+			}
 		};
 	}
 }

@@ -26,16 +26,36 @@ namespace Input
 		string parseName();
 		void processTextNode(shared_ptr<Element> parent);
 
+
 	public:
 		static constexpr char ElementBegin = '{';
 		static constexpr char ElementEnd = '}';
 		static constexpr char EscapeChar = '`';
 		static constexpr char ArgSep = ' ';
 
-		static bool isControlChar(char c);
-		static bool isWhiteChar(char c);
 
-		Parser(istream &stream);
+		static bool isControlChar(char c)
+		{
+			return c == Parser::EscapeChar
+				|| c == Parser::ElementBegin
+				|| c == Parser::ElementEnd;
+		}
+
+
+		static bool isWhiteChar(char c)
+		{
+			return c == '\t'
+				|| c == '\r'
+				|| c == '\n'
+				|| c == ' ';
+		}
+
+
+		Parser(istream &stream) : stream(stream)
+		{
+			textbuf = stringstream();
+		}
+
 
 		shared_ptr<Document> parseDocument();
 	};

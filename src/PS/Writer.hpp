@@ -14,13 +14,32 @@ namespace PS
 		const string EOL = "\r\n";
 
 	public:
-		Writer(ostream &out);
+		Writer(ostream &out) : out(out)
+		{
+		}
 
-		void writeLine(string code);
 
-		void writeTd(int x, int y);
-		void writeTf(string fontName, int fontSize);
-		void writeTj(string text);
-		void writeTm(int, int, int, int, int x, int y);
+		void writeLine(string code)
+		{
+			out << code << EOL;
+		}
+
+
+		void writeTd(int x, int y)
+		{
+			out << x << " " << y << " Td" << EOL;
+		}
+
+
+		void writeTf(string fontName, int fontSize)
+		{
+			out << fontName << " " << fontSize << " Tf" << EOL;
+		}
+
+
+		void writeTj(string text)
+		{
+			out << '(' << text << ")Tj" << EOL;
+		}
 	};
 }

@@ -10,12 +10,31 @@ namespace BoxModel
 	class VGlue : public Glue
 	{
 	public:
-		VGlue(int cardinality, int height, int shrink, int stretch);
+		VGlue(int cardinality, int size, int shrink, int stretch)
+			: Glue(cardinality, size, shrink, stretch) {}
 
-		int getActualSize();
-		void setActualSize(int size);
 
-		void dump(ostream &out, int level = 0);
-		void writePSOutput(PS::Writer &writer);
+		int getActualSize()
+		{
+			return height;
+		}
+
+
+		void setActualSize(int size)
+		{
+			height = size;
+		}
+
+
+		void dump(ostream &out, int level)
+		{
+			out << string(level, '\t') << '^' << cardinality << '^' << endl;
+		}
+
+
+		void writePSOutput(PS::Writer &writer)
+		{
+			writer.writeTd(0, -height);
+		}
 	};
 }

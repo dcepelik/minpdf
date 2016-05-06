@@ -10,13 +10,41 @@ namespace BoxModel
 	class VList : public List
 	{
 	protected:
-		int getBoxSize(shared_ptr<Box> box);
-		int getMaxListSize();
+		int getBoxSize(shared_ptr<Box> box)
+		{
+			return box->getHeight();
+		}
+
+
+		int getMaxListSize()
+		{
+			return maxSize;
+		}
+
 
 	public:
-		VList(int size);
+		VList(int size) : List(size)
+		{
+		}
 
-		void dump(ostream &out, int level = 0);
-		void writePSOutput(PS::Writer &writer);
+
+		void dump(ostream &out, int level)
+		{
+			out << string(level, '\t') << "^^[" << endl;
+
+			for (auto child: children)
+				child->dump(out, level + 1);
+
+			out << string(level, '\t') << ']' << endl;
+		}
+
+
+		void writePSOutput(PS::Writer &writer)
+		{
+			divideSpaces();
+
+			List::writePSOutput(writer);
+			writer.writeTd(-612, -getMaxListSize());
+		}
 	};
 }

@@ -19,10 +19,27 @@ namespace PDF
 			unordered_map<string, Object *> items;
 
 		public:
-			void addItem(string name, Object *obj);
-			void addItem(string name, shared_ptr<Object> ptr);
+			void writePDFOutput(Writer &writer)
+			{
+				writer.writeLine("<<");
+				writer.increaseIndent();
 
-			void writePDFOutput(Writer &writer);
+				for (auto item: items) {
+					Name(item.first).writePDFOutput(writer);
+					writer.increaseIndent();
+					item.second->writePDFOutput(writer);
+					writer.decreaseIndent();
+				}
+				
+				writer.decreaseIndent();
+				writer.writeLine(">>");
+			}
+
+
+			void addItem(string name, Object *obj)
+			{
+				items.emplace(name, obj);
+			}
 		};
 	}
 }

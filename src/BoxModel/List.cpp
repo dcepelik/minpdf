@@ -7,12 +7,6 @@
 using namespace BoxModel;
 
 
-List::List(int maxSize) : Container()
-{
-	this->maxSize = maxSize;
-}
-
-
 void
 List::divideSpaces()
 {

@@ -17,9 +17,16 @@ namespace PDF
 			string name;
 
 		public:
-			Name(string name);
+			Name(string name)
+			{
+				this->name = name; /* @todo check name is valid */
+			}
 
-			void writePDFOutput(Writer &writer);
+
+			void writePDFOutput(Writer &writer)
+			{
+				writer.writeLine("/" + name);
+			}
 		};
 	}
 }

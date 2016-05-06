@@ -17,9 +17,16 @@ namespace PDF
 			string code;
 
 		public:
-			Literal(string code);
+			Literal(string code)
+			{
+				this->code = code;
+			}
 
-			void writePDFOutput(Writer &writer);
+
+			void writePDFOutput(Writer &writer)
+			{
+				writer.write(code); /* be verbatim: don't add an EOL */
+			}
 		};
 	}
 }

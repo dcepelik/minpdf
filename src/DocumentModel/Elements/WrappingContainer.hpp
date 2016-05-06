@@ -27,7 +27,12 @@ namespace DocumentModel
 
 		public:
 			WrappingContainer(shared_ptr<Element> parent,
-				string name, int maxSize);
+				string name, int maxSize)
+				: Container(parent, name)
+			{
+				this->maxSize = maxSize;
+			}
+
 
 			void render(vector<shared_ptr<Box>> &boxes);
 		};
