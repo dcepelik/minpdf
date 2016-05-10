@@ -3,8 +3,8 @@
 CC=clang++
 CFLAGS=-c -std=c++14 -Wall -Wextra --pedantic -g -I$(CURDIR)
 LDFLAGS=-Wall -Wextra --pedantic
-PROG=qutepdf
-OBJS=qutepdf.o\
+PROG=minpdf
+OBJS=minpdf.o\
 	BoxModel/Box.o\
 	BoxModel/Char.o\
 	BoxModel/Container.o\
