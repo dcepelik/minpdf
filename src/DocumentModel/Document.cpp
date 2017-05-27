@@ -24,7 +24,7 @@ DM::Document::renderPDFOutput(ostream &out)
 		stringstream ps;
 		PS::Writer psWriter(ps);
 
-		ps << "0 752 Td\r\n";	/* TODO */
+		ps << "0 792 Td\r\n";	/* TODO */
 		box->writePSOutput(psWriter);
 
 		shared_ptr<PDF::Page> page(new PDF::Page(ps.str()));

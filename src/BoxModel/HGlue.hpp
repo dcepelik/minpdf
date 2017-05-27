@@ -10,7 +10,7 @@ namespace BoxModel
 	class HGlue : public Glue
 	{
 	public:
-		HGlue(int cardinality, int size, int shrink, int stretch)
+		HGlue(int cardinality, double size, double shrink, double stretch)
 			: Glue(cardinality, size, shrink, stretch)
 		{
 		}
@@ -23,13 +23,13 @@ namespace BoxModel
 		}
 
 
-		int getActualSize()
+		double getActualSize()
 		{
 			return width;
 		}
 
 
-		void setActualSize(int size)
+		void setActualSize(double size)
 		{
 			width = size;
 		}

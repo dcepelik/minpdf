@@ -10,13 +10,13 @@ namespace BoxModel
 	class VList : public List
 	{
 	protected:
-		int getBoxSize(shared_ptr<Box> box)
+		double getBoxSize(shared_ptr<Box> box)
 		{
 			return box->getHeight();
 		}
 
 
-		int getMaxListSize()
+		double getMaxListSize()
 		{
 			return maxSize;
 		}

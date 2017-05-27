@@ -48,15 +48,27 @@ main(int argc, char *argv[]) {
 
 	//doc->dump();
 
-	shared_ptr<Style> defaultStyle(new Style());
-	defaultStyle->fontFamily = "/F1";
-	defaultStyle->fontSize = 11;
-
 	shared_ptr<StyleTable> table(new StyleTable());
-	table->addStyle("p", defaultStyle);
+
+	unique_ptr<Style> pStyle(new Style());
+	pStyle->fontFamily = "/F1";
+	pStyle->fontSize = 12;
+	table->addStyle("p", move(pStyle));
+
+	unique_ptr<Style> titleStyle(new Style());
+	titleStyle->fontFamily = "/F1";
+	titleStyle->fontSize = 28;
+	table->addStyle("title", move(titleStyle));
+
+	for (int i = 1; i <= 3; i++) {
+		unique_ptr<Style> headlineStyle(new Style());
+		headlineStyle->fontFamily = "/F1";
+		headlineStyle->fontSize = 20 - 3 * (i - 1);
+
+		table->addStyle(to_string(i), move(headlineStyle));
+	}
 
 	doc->setStyleTable(table);
-
 	doc->renderPDFOutput(ofs);
 
 	cout << endl << "Done." << endl;

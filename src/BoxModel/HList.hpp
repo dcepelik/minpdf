@@ -10,13 +10,13 @@ namespace BoxModel
 	class HList : public List
 	{
 	protected:
-		int getBoxSize(shared_ptr<Box> box)
+		double getBoxSize(shared_ptr<Box> box)
 		{
 			return box->getWidth();
 		}
 
 
-		int getMaxListSize()
+		double getMaxListSize()
 		{
 			return maxSize; /* TODO */
 		}
@@ -25,7 +25,18 @@ namespace BoxModel
 	public:
 		HList(int maxSize) : List(maxSize)
 		{
-			this->height = 8;
+			this->height = 0; /* TODO */
+		}
+
+
+		double getHeight()
+		{
+			double maxHeight = 0;
+			for (auto child: children) {
+				maxHeight = max(maxHeight, child->getHeight());
+			}
+
+			return maxHeight;
 		}
 
 
@@ -42,10 +53,13 @@ namespace BoxModel
 
 		void writePSOutput(PS::Writer &writer)
 		{
+			double sink = 0.3; /* TODO */
+
 			divideSpaces();
 
+			writer.writeTd(0, -getHeight() * (1 - sink));
 			List::writePSOutput(writer);
-			writer.writeTd(-getMaxListSize(), -height); /* TODO */
+			writer.writeTd(-getMaxListSize(), -getHeight() * sink);
 		}
 	};
 }

@@ -42,15 +42,15 @@ WrappingContainer::render(vector<shared_ptr<Box>> &boxes)
 		cout << endl;
 		*/
 
-		int sizeOfBoxes = 0;	/* current list size */
+		double sizeOfBoxes = 0;	/* current list size */
 		int listBadness;	/* current list badness */
 		int newBadness;		/* new badness (when dividing here) */
 
-		int glueSize = 0;	/* regular glue size */
-		int minGlueSize = 0;	/* glue size accounting for shrink */
-		int maxGlueSize = 0;	/* glue size accounting for stretch */
-		int actualGlueSize;	/* actual glue size (as rendered) */
-		int naturalSize;	/* natural size of the line */
+		double glueSize = 0;	/* regular glue size */
+		double minGlueSize = 0;	/* glue size accounting for shrink */
+		double maxGlueSize = 0;	/* glue size accounting for stretch */
+		double actualGlueSize;	/* actual glue size (as rendered) */
+		double naturalSize;	/* natural size of the line */
 
 		for (auto itEnd = itBegin + 1; itEnd != inner.end(); itEnd++) {
 			auto end = (*itEnd);

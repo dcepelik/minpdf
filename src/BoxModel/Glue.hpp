@@ -13,12 +13,12 @@ namespace BoxModel
 	protected:
 		int cardinality;
 
-		int size;
-		int shrink;
-		int stretch;
+		double size;
+		double shrink;
+		double stretch;
 
 	public:
-		Glue(int cardinality, int size, int shrink, int stretch)
+		Glue(int cardinality, double size, double shrink, double stretch)
 		{
 			this->cardinality = cardinality;
 			this->size = size;
@@ -33,19 +33,19 @@ namespace BoxModel
 		}
 
 
-		int getSize()
+		double getSize()
 		{
 			return size;
 		}
 
 
-		int getMinSize()
+		double getMinSize()
 		{
 			return size - shrink;
 		}
 
 
-		int getMaxSize()
+		double getMaxSize()
 		{
 			if (cardinality > 0)
 				return INT_MAX / 2;
@@ -53,8 +53,8 @@ namespace BoxModel
 			return size + stretch;
 		}
 
-		virtual int getActualSize() = 0;
-		virtual void setActualSize(int size) = 0;
+		virtual double getActualSize() = 0;
+		virtual void setActualSize(double size) = 0;
 
 		virtual void dump(ostream &out, int level = 0) = 0;
 		virtual void writePSOutput(PS::Writer &writer) = 0;

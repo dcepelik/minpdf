@@ -13,7 +13,7 @@ namespace DocumentModel
 		class HWrappingContainer : public WrappingContainer
 		{
 		protected:
-			int getBoxSize(shared_ptr<Box> box)
+			double getBoxSize(shared_ptr<Box> box)
 			{
 				return box->getWidth();
 			}
@@ -27,7 +27,7 @@ namespace DocumentModel
 
 			shared_ptr<Glue> createNewInterlineGlue()
 			{
-				return shared_ptr<Glue>(new VGlue(0, 5, 0, 0));
+				return shared_ptr<Glue>(new VGlue(0, 3, 0, 0));
 			}
 
 

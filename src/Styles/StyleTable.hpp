@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <memory>
 #include <map>
 
@@ -11,7 +12,7 @@ namespace Styles
 {
 	class StyleTable
 	{
-		map<string, shared_ptr<Style>> styles;
+		map<string, unique_ptr<Style>> styles;
 
 	public:
 		StyleTable()
@@ -19,15 +20,15 @@ namespace Styles
 		}
 
 
-		void addStyle(string name, shared_ptr<Style> style)
+		void addStyle(string name, unique_ptr<Style> style)
 		{
-			styles.emplace(name, style);
+			styles.emplace(name, move(style));
 		}
 
 
-		shared_ptr<Style> getStyle(string name)
+		Style *getStyle(string name)
 		{
-			return styles[name];
+			return styles[name].get();
 		}
 	};
 }

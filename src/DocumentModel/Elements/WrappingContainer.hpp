@@ -17,7 +17,7 @@ namespace DocumentModel
 		protected:
 			int maxSize;
 
-			virtual int getBoxSize(shared_ptr<Box> box) = 0;
+			virtual double getBoxSize(shared_ptr<Box> box) = 0;
 			virtual shared_ptr<Glue> createNewInfGlue() = 0;
 			virtual shared_ptr<List> createNewList(
 				vector<shared_ptr<Box>>::iterator begin,

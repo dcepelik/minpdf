@@ -10,17 +10,17 @@ namespace BoxModel
 	class VGlue : public Glue
 	{
 	public:
-		VGlue(int cardinality, int size, int shrink, int stretch)
+		VGlue(int cardinality, double size, double shrink, double stretch)
 			: Glue(cardinality, size, shrink, stretch) {}
 
 
-		int getActualSize()
+		double getActualSize()
 		{
 			return height;
 		}
 
 
-		void setActualSize(int size)
+		void setActualSize(double size)
 		{
 			height = size;
 		}

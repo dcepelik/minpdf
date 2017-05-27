@@ -15,14 +15,14 @@ namespace BoxModel
 	class Box
 	{
 	protected:
-		int width;
-		int height;
+		double width;
+		double height;
 
 		int badness = 1e4;		/* cost when breaking here */
 		shared_ptr<Box> prev;		/* previous division point */
 
 	public:
-		Box(int width = 0, int height = 0)
+		Box(double width = 0, double height = 0)
 		{
 			this->width = width;
 			this->height = height;
@@ -33,12 +33,12 @@ namespace BoxModel
 		virtual void writePSOutput(PS::Writer &writer) = 0;
 
 
-		int getWidth()
+		double getWidth()
 		{
 			return width;
 		}
 
-		int getHeight()
+		double getHeight()
 		{
 			return height;
 		}
@@ -53,12 +53,12 @@ namespace BoxModel
 			return prev;
 		}
 
-		void setWidth(int width)
+		void setWidth(double width)
 		{
 			this->width = width;
 		}
 
-		void setHeight(int height)
+		void setHeight(double height)
 		{
 			this->height = height;
 		}

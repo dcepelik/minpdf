@@ -20,12 +20,13 @@ namespace DocumentModel
 		class Element
 		{
 		protected:
-			string name;
 			shared_ptr<Element> parent;
 
 			Element();
 
 		public:
+			string name;
+
 			Element(shared_ptr<Element> parent, string name)
 			{
 				this->parent = parent;
@@ -41,9 +42,9 @@ namespace DocumentModel
 			}
 
 
-			shared_ptr<Element> getParent()
+			Element *getParent()
 			{
-				return parent;
+				return parent.get();
 			}
 
 
@@ -73,6 +74,7 @@ namespace DocumentModel
 			}
 
 			Document *getDocument();
+			unique_ptr<Style> getStyle();
 		};
 	}
 }

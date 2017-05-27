@@ -46,7 +46,7 @@ Document::writePDFOutput(Writer &writer)
 	defaultFont.getInner().addItem("Type", new Name("Font"));
 	defaultFont.getInner().addItem("Subtype", new Name("Type1"));
 	defaultFont.getInner().addItem("Name", new Name("F1"));
-	defaultFont.getInner().addItem("BaseFont", new Name("Courier"));
+	defaultFont.getInner().addItem("BaseFont", new Name("Times-Roman"));
 	defaultFont.getInner().addItem("Encoding", new Name("MacRomanEncoding"));
 
 	auto defaultFontRef = defaultFont.getReference();

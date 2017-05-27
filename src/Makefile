@@ -1,7 +1,7 @@
 .PHONY: clean
 
 CC=clang++
-CFLAGS=-c -std=c++14 -Wall -Wextra --pedantic -g -I$(CURDIR)
+CFLAGS=-c -std=c++14 -Wall -Wextra --pedantic -g -I$(CURDIR) -Wno-char-subscripts -Werror
 LDFLAGS=-Wall -Wextra --pedantic
 PROG=minpdf
 OBJS=minpdf.o\
@@ -48,5 +48,8 @@ $(PROG): $(OBJS)
 %.o: %.cpp %.hpp
 	$(CC) $(CFLAGS) -o $@ $<
 
+DocumentModel/Elements/TextNode.o: DocumentModel/Elements/TextNode.cpp DocumentModel/Elements/TextNode.hpp BoxModel/Char.hpp 
+	$(CC) $(CFLAGS) -o $@ $<
+
 clean:
-	rm -rf -- $(PROG) $(OBJS)
+	rm -rf -- $(PROG) $(OBJS) *.d vgcore.*

@@ -85,6 +85,8 @@ Parser::parseElement(shared_ptr<Element> parent)
 		el = new DocumentModel::Elements::Container(parent, name);
 	}
 
+	el->name = name;
+
 	shared_ptr<Element> elPtr(el);
 	parseChildren(elPtr);
 

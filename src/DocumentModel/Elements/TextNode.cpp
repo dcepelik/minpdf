@@ -19,11 +19,12 @@ TextNode::render(vector<shared_ptr<Box>> &boxes)
 {
 	bool pushGlue = false;
 
-	shared_ptr<Style> style = getDocument()->getStyleTable()->getStyle("p");
+	shared_ptr<Style> style = getStyle();//;getDocument()->getStyleTable()->getStyle("p");
+	cout << this->name << endl;
 
 	for (uint i = 0; i < text.length(); i++) {
 		if (Parser::isWhiteChar(text[i])) {
-			int regularGlueWidth = 0.8 * style->fontSize;
+			double regularGlueWidth = 0.8 * style->fontSize;
 			if (pushGlue)
 				boxes.push_back(shared_ptr<Box>(
 					new HGlue(

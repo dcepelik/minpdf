@@ -9,16 +9,16 @@ namespace BoxModel
 	class List : public Container
 	{
 	protected:
-		int maxSize;
+		double maxSize;
 
 
-		List(int maxSize) : Container()
+		List(double maxSize) : Container()
 		{
 			this->maxSize = maxSize;
 		}
 
 		void divideSpaces();
 
-		virtual int getBoxSize(shared_ptr<Box> box) = 0;
+		virtual double getBoxSize(shared_ptr<Box> box) = 0;
 	};
 }

@@ -25,7 +25,13 @@ namespace PS
 		}
 
 
-		void writeTd(int x, int y)
+		//void writeTd(int x, int y)
+		//{
+		//	out << x << " " << y << " Td" << EOL;
+		//}
+
+
+		void writeTd(double x, double y)
 		{
 			out << x << " " << y << " Td" << EOL;
 		}
