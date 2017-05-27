@@ -36,9 +36,10 @@ unique_ptr<Style> Element::getStyle()
 	assert(parent.get() != this);
 
 	if (!parent) {
+		/* "default" style */
 		s = unique_ptr<Style>(new Style());
-		s->fontFamily = "/F1";
-		s->fontSize = 11;
+		s->setFontFamily("/F1");
+		s->setFontSize(12);
 	}
 	else {
 		s = parent->getStyle();
@@ -52,4 +53,3 @@ unique_ptr<Style> Element::getStyle()
 
 	return s;
 }
-

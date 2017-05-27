@@ -39,26 +39,24 @@ Parser::parseChildren(shared_ptr<Element> parent)
 				);
 			}
 		}
-		else {
-			if (isControlChar(c)) {
-				switch (c) {
-				case Parser::EscapeChar:
-					escaping = true;
-					break;
+		else if (isControlChar(c)) {
+			switch (c) {
+			case Parser::EscapeChar:
+				escaping = true;
+				break;
 
-				case Parser::ElementBegin:
-					processTextNode(parent);
-					parent->addChild(parseElement(parent));
-					break;
+			case Parser::ElementBegin:
+				processTextNode(parent);
+				parent->addChild(parseElement(parent));
+				break;
 
-				case Parser::ElementEnd:
-					stream.unget();
-					processTextNode(parent);
-					return;
-				}
-
-				continue;
+			case Parser::ElementEnd:
+				stream.unget();
+				processTextNode(parent);
+				return;
 			}
+
+			continue;
 		}
 
 		escaping = false;
@@ -79,7 +77,7 @@ Parser::parseElement(shared_ptr<Element> parent)
 	 */
 	Element *el;
 	if (name == "p") {
-		el = new Paragraph(parent, 500); /* TODO */
+		el = new Paragraph(parent, 400); /* TODO */
 	}
 	else {
 		el = new DocumentModel::Elements::Container(parent, name);

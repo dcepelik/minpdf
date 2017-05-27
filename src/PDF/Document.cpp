@@ -28,7 +28,10 @@ Document::writePDFOutput(Writer &writer)
 	Array kids;
 	Dictionary trailer;
 	Dictionary fonts;
-	IndirectObject<Dictionary> defaultFont;
+	IndirectObject<Dictionary> timesRomanFont;
+	IndirectObject<Dictionary> timesBoldFont;
+	IndirectObject<Dictionary> timesItalicFont;
+	IndirectObject<Dictionary> courierFont;
 
 	catalog.getInner().addItem("Type", new Name("Catalog"));
 
@@ -43,14 +46,41 @@ Document::writePDFOutput(Writer &writer)
 	trailer.addItem("Root", catalogRef.get());
 	trailer.addItem("Size", new Number(6)); // TODO
 
-	defaultFont.getInner().addItem("Type", new Name("Font"));
-	defaultFont.getInner().addItem("Subtype", new Name("Type1"));
-	defaultFont.getInner().addItem("Name", new Name("F1"));
-	defaultFont.getInner().addItem("BaseFont", new Name("Times-Roman"));
-	defaultFont.getInner().addItem("Encoding", new Name("MacRomanEncoding"));
+	timesRomanFont.getInner().addItem("Type", new Name("Font"));
+	timesRomanFont.getInner().addItem("Subtype", new Name("Type1"));
+	timesRomanFont.getInner().addItem("Name", new Name("F1"));
+	timesRomanFont.getInner().addItem("BaseFont", new Name("Times-Roman"));
+	timesRomanFont.getInner().addItem("Encoding", new Name("MacRomanEncoding"));
 
-	auto defaultFontRef = defaultFont.getReference();
-	fonts.addItem("F1", defaultFontRef.get());
+	timesBoldFont.getInner().addItem("Type", new Name("Font"));
+	timesBoldFont.getInner().addItem("Subtype", new Name("Type1"));
+	timesBoldFont.getInner().addItem("Name", new Name("F3"));
+	timesBoldFont.getInner().addItem("BaseFont", new Name("Times-Bold"));
+	timesBoldFont.getInner().addItem("Encoding", new Name("MacRomanEncoding"));
+
+	timesItalicFont.getInner().addItem("Type", new Name("Font"));
+	timesItalicFont.getInner().addItem("Subtype", new Name("Type1"));
+	timesItalicFont.getInner().addItem("Name", new Name("F4"));
+	timesItalicFont.getInner().addItem("BaseFont", new Name("Times-Italic"));
+	timesItalicFont.getInner().addItem("Encoding", new Name("MacRomanEncoding"));
+
+	courierFont.getInner().addItem("Type", new Name("Font"));
+	courierFont.getInner().addItem("Subtype", new Name("Type1"));
+	courierFont.getInner().addItem("Name", new Name("F2"));
+	courierFont.getInner().addItem("BaseFont", new Name("Courier"));
+	courierFont.getInner().addItem("Encoding", new Name("MacRomanEncoding"));
+
+	auto timesRomanFontRef = timesRomanFont.getReference();
+	fonts.addItem("F1", timesRomanFontRef.get());
+
+	auto timesBoldFontRef = timesBoldFont.getReference();
+	fonts.addItem("F3", timesBoldFontRef.get());
+
+	auto timesItalicFontRef = timesItalicFont.getReference();
+	fonts.addItem("F4", timesItalicFontRef.get());
+
+	auto courierFontRef = courierFont.getReference();
+	fonts.addItem("F2", courierFontRef.get());
 
 	vector<unique_ptr<Reference>> pageRefs;
 
@@ -69,7 +99,11 @@ Document::writePDFOutput(Writer &writer)
 		auto pagesRef = pages.getReference();
 		pageDef.getInner().addItem("Parent", pagesRef.get());
 
-		pageDef.getInner().addItem("MediaBox", new Literal("[0 0 612 792]\r\n"));
+		/*
+		 * A4 MediaBox size taken from
+		 * http://www.telerik.com/forums/export-to-pdf-what-is-the-correct-mediabox-size-for-a4
+		 */
+		pageDef.getInner().addItem("MediaBox", new Literal("[0 0 594.75 842.25]\r\n"));
 
 		auto streamRef = stream.getReference();
 		pageDef.getInner().addItem("Contents", streamRef.get());
@@ -87,7 +121,10 @@ Document::writePDFOutput(Writer &writer)
 
 	catalog.writePDFOutput(writer);
 	pages.writePDFOutput(writer);
-	defaultFont.writePDFOutput(writer);
+	timesRomanFont.writePDFOutput(writer);
+	timesBoldFont.writePDFOutput(writer);
+	timesItalicFont.writePDFOutput(writer);
+	courierFont.writePDFOutput(writer);
 
 	writer.writeLine("trailer");
 	trailer.writePDFOutput(writer);

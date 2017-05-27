@@ -9,20 +9,48 @@ namespace Styles
 {
 	struct Style
 	{
-		bool fontFamilyValid;
-		bool fontSizeValid;
+	private:
+		bool fontFamilyValid = false;
+		bool fontSizeValid = false;
 
 		string fontFamily;
 		int fontSize;
 
 
+	public:
+		void setFontFamily(string fontFamily)
+		{
+			this->fontFamily = fontFamily;
+			this->fontFamilyValid = true;
+		}
+
+
+		void setFontSize(int fontSize)
+		{
+			this->fontSize = fontSize;
+			this->fontSizeValid = true;
+		}
+
+
+		string getFontFamily()
+		{
+			return fontFamily;
+		}
+
+
+		int getFontSize()
+		{
+			return fontSize;
+		}
+
+
 		void patch(Style *patchStyle)
 		{
-			if (!fontFamilyValid)
-				fontFamily = patchStyle->fontFamily;
+			if (patchStyle->fontFamilyValid)
+				setFontFamily(patchStyle->fontFamily);
 
-			if (!fontSizeValid)
-				fontSize = patchStyle->fontSize;
+			if (patchStyle->fontSizeValid)
+				setFontSize(patchStyle->fontSize);
 		}
 	};
 }

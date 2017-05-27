@@ -17,7 +17,7 @@ namespace DocumentModel
 		shared_ptr<StyleTable> styleTable;
 
 	public:
-		Document() : VWrappingContainer(shared_ptr<Element>(NULL), "document", 762)
+		Document() : VWrappingContainer(shared_ptr<Element>(NULL), "document", 842.25 - 300) /* TODO */
 		{
 		}
 

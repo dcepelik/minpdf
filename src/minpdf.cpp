@@ -46,27 +46,37 @@ main(int argc, char *argv[]) {
 	shared_ptr<DocumentModel::Document> doc = p.parseDocument();
 	buf.close();
 
-	//doc->dump();
+	doc->dump(0);
 
 	shared_ptr<StyleTable> table(new StyleTable());
 
 	unique_ptr<Style> pStyle(new Style());
-	pStyle->fontFamily = "/F1";
-	pStyle->fontSize = 12;
+	pStyle->setFontFamily("/F1");
+	pStyle->setFontSize(12);
 	table->addStyle("p", move(pStyle));
 
 	unique_ptr<Style> titleStyle(new Style());
-	titleStyle->fontFamily = "/F1";
-	titleStyle->fontSize = 28;
+	titleStyle->setFontSize(28);
+	titleStyle->setFontFamily("/F3");
 	table->addStyle("title", move(titleStyle));
 
 	for (int i = 1; i <= 3; i++) {
 		unique_ptr<Style> headlineStyle(new Style());
-		headlineStyle->fontFamily = "/F1";
-		headlineStyle->fontSize = 20 - 3 * (i - 1);
-
+		headlineStyle->setFontSize(20 - 5 * (i - 1) + i);
 		table->addStyle(to_string(i), move(headlineStyle));
 	}
+
+	unique_ptr<Style> ttStyle(new Style());
+	ttStyle->setFontFamily("/F2");
+	table->addStyle("tt", move(ttStyle));
+
+	unique_ptr<Style> bfStyle(new Style());
+	bfStyle->setFontFamily("/F3");
+	table->addStyle("bf", move(bfStyle));
+
+	unique_ptr<Style> itStyle(new Style());
+	itStyle->setFontFamily("/F4");
+	table->addStyle("it", move(itStyle));
 
 	doc->setStyleTable(table);
 	doc->renderPDFOutput(ofs);
