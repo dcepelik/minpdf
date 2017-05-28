@@ -88,8 +88,8 @@ namespace BoxModel
 				charWidths['+'] = 6.3;
 				charWidths['-'] = 4;
 				charWidths['.'] = 2;
-				charWidths['('] = 3;
-				charWidths[')'] = 3;
+				charWidths['('] = 4;
+				charWidths[')'] = 4;
 
 				if (fontFamily == "/F3") {
 					for (size_t i = 0; i < charWidths.size(); i++)

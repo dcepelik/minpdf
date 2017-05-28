@@ -1,0 +1,153 @@
+{p {title Introduction to {it minpdf}}}
+
+{p (As compiled from {tt {!filename}}.)}
+
+{p This is a brief quick start guide for new users, and a demonstration of {it minpdf}'s
+operation as well. I hope it will be useful!}
+
+{p {1 Project Status}}
+
+{p {bf At the moment, this project is hardly of any practical use.} It was created as a seminar
+project and the typographical quality of the output is lousy, as you surely witness reading
+through this manual. Also, the author is a novice C++ programmer with little to no previous
+experience with the language.}
+
+{p {1 Invocation}}
+
+{p minpdf is targetted at command-line users. To produce some PDF output, you smiply say}
+
+{p {tt minpdf <input-file> <output-file>}}
+
+{p {1 What {it minpdf} Does and Doesn't Do}}
+
+{p {2 Page and Paragraph Division}}
+{p The main feature of minpdf is a paragraph and page division algorithm. It mimics
+what TeX does, but it not only divides paragraphs in a mathematically optimal sense;
+it does that with pages, too. This doesn't mean it's any better than TeX; TeX uses
+a lot of heuristics and carefully tested penalties values to create beautiful documents.
+Simply optimizing page layout doesn't necesarilly guarantee better results by
+itself.}
+
+{p {2 No Hyphenation}}
+{p minpdf is incapable of dividing words. Dividing words is not an easy task when it's
+to be done properly and it was out of scope of the assignment.}
+
+{p Because of the missing hyphenation, the output is far worse then TeX's.}
+
+{p {1 Input File Syntax}}
+
+{p {2 Control Characters}}
+
+{p The characters {tt `{}, {tt `}} and {tt ``} are treated specially by {it minpdf}:
+they are used to delimit blocks and to create escape sequences.}
+
+{p {3 Content Blocks}}
+
+{p Also called {it elements}, content blocks contain... well, content, but they
+also carry semantic information about the content.}
+
+{p Syntactically, content blocks look like {tt `{{it element-name} [{it content}]`}}.}
+
+{p Content blocks are important for several reasons:}
+
+{list
+	{p They allow you to create documents that are easily processed by other
+	tools, because specific portions of the document, such as all headlines, are
+	easily extracted from the file using basic text-processing utilities.}
+
+	{p They let you attach {it styles} to elements, making it easy to
+	achieve consistent formatting across the whole document.}
+}
+
+
+{p {3 Command Blocks}}
+
+{p Commands are actually just elements, but they don't bear any meaning, instead,
+they change what is typeset or how it is typeset.}
+
+{p Syntactically, command blocks have the form {tt `{!{it command-name}`}.}}
+
+{p At the moment, only the following commands are supported:}
+
+{list
+	{p Command {tt filename} expands to the name of the input file.}
+	{p Command {tt line} inserts a horizontal line.}
+}
+
+{p {3 Escape Sequences}}
+
+{p Control chacacters may be escaped: by inserting a backtick {tt ``} just
+in front of them, their special meaning is cancelled: so you may write the
+characters {tt `{}, {tt `}} and other control characters if you need to.}
+
+
+{p {2 Typographical replacements}}
+
+{p When you write two dashes in a row ({tt -}{tt -}), you'll get
+a long dash (--). With more than two dashes, you'll get a {tt long long dash}
+(---). The ellipse (three dots) is not replaced specially; its size in the
+fonts we use makes it tight already (...).}
+
+
+{p {1 Internal Operation}}
+
+{p {2 Building}}
+
+{p Run {tt make}. The supplied Makefile is only good for bulding, not for
+rebuilding! (No dependecies are set in the Makefile.)}
+
+{p {2 Dependencies}}
+
+{p None except C++ standard library. Written in C++14.}
+
+{p {2 Processing}}
+
+{p The document is processed in the following steps:}
+
+{list
+	{p Input file is read and a DOM representation is built.}
+	{p From the DOM, box representation using rendering primitives is created.}
+	{p From the rendering primitives, PostScript code is produced.}
+	{p The PostScript code is compiled into a PDF document.}
+}
+
+{p The DOM can be seen when running {tt minpdf}, it's written to {tt cout}.}
+
+{p {2 Important Concepts}}
+
+{p {3 Boxes And Glue}}
+
+{p {it minpdf} implements the well-known TeX rendering model using boxes and
+glue. Content is optimally distributed across paragraphs and pages (see below)
+using Knuth's alorithm (see the TeXbook).}
+
+{p {3 Content-Division Encapsulation}}
+
+{p The content-dividing algorithm is generic and is encapsulated by
+{tt WrappingContainer}. Its descendants {tt HWrappingContainer} and
+{tt VWrappingContainer} are resposnible for dividing content into
+{tt HList}s and {tt VList}s, respectively.}
+
+{p The {tt WrappingContainer} builds a directed-acyclic graph internally
+and finds shortest paths, where path cost is {it badness} calculated using
+Knuth's formula.}
+
+{p While the {tt WrappingContainer}s take care of the division of content in
+an optimal sense, the {tt HList} and {tt VList} take care of the actual
+distribution of boxes according to the rules of stretchability and shrinkability.
+Again, this was TeX inspired.}
+
+{!line}
+{p {bf Have a look at {tt src/DocumentModel/Elements/WrappingContainer.cpp} for
+commented code that takes care of the division.}}
+{!line}
+
+{p {3 Decomposition And Proper OO Design}}
+
+{p Although the abstractions are far from perfect, the software is decomposed
+into {tt BoxModel}, {tt DocumentModel}, {tt PS}, {tt PDF} and {tt Input}
+modules. These correspond rougly with the processing steps described before.}
+
+{p We have managed to use the power of inheritance and composition to avoid
+unnecessary conditionals in the code. For example the DOM is built of many
+objects, most of which only override the functions that define their behaviour.}

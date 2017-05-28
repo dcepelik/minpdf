@@ -64,7 +64,7 @@ DM::Document::renderPDFOutput(ostream &out)
 		TextNode *tn = new TextNode(shared_ptr<Element>(pageNoPar), "Page " + to_string(pageNo));
 		pageNoPar->addChild(shared_ptr<Element>(tn));
 
-		Line *line = new Line();
+		Line *line = new Line(getContentWidth(), 0, 0, true);
 
 		vector<shared_ptr<Box>> tmp;
 		tmp.push_back(shared_ptr<Box>(line));

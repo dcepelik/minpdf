@@ -2,6 +2,7 @@
 
 #include "Command.hpp"
 #include "BoxModel/Line.hpp"
+#include "DocumentModel/Document.hpp"
 
 using namespace BoxModel;
 
@@ -22,7 +23,7 @@ namespace DocumentModel
 
 				virtual void render(vector<shared_ptr<Box>> &boxes)
 				{
-					boxes.push_back(shared_ptr<Box>(new Line()));
+					boxes.push_back(shared_ptr<Box>(new Line(getDocument()->getContentWidth(), 0, 0, true)));
 				}
 			};
 		}

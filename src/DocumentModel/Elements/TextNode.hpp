@@ -29,6 +29,7 @@ namespace DocumentModel
 
 
 			virtual void render(vector<shared_ptr<Box>> &boxes);
+			virtual void writeDashes(vector<shared_ptr<Box>> &boxes, int dashCount);
 
 
 			void dump(int level)

@@ -12,5 +12,5 @@ Page::Page(string code)
 string
 Page::contents()
 {
-	return this->code;
+	return "BT\r\n" + this->code + "ET\r\n";
 }

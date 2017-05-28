@@ -126,10 +126,11 @@ Document::writePDFOutput(Writer &writer)
 	timesItalicFont.writePDFOutput(writer);
 	courierFont.writePDFOutput(writer);
 
+	writer.writeXrefTable();
+
 	writer.writeLine("trailer");
 	trailer.writePDFOutput(writer);
 
-	writer.writeXrefTable();
 	writer.writeStartXref();
 	writer.writeEOF();
 }

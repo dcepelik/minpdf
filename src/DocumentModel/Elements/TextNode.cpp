@@ -16,6 +16,45 @@ using namespace std;
 
 
 void
+TextNode::writeDashes(vector<shared_ptr<Box>> &boxes, int dashCount)
+{
+	shared_ptr<Style> style = getStyle();
+
+	if (dashCount > 0) {
+		if (dashCount == 1) { /* regular dash */
+			boxes.push_back(shared_ptr<Box>(
+				new Char(
+					'-',
+					style->getFontFamily(),
+					style->getFontSize()
+				)
+			));
+		}
+		else if (dashCount == 2) { /* longer dash */
+			boxes.push_back(shared_ptr<Box>(
+				new Line(
+					7,
+					0,
+					-style->getFontSize() * .4,
+					false
+				)
+			));
+		}
+		else { /* longest dash */
+			boxes.push_back(shared_ptr<Box>(
+				new Line(
+					12,
+					0,
+					-style->getFontSize() * .4,
+					false
+				)
+			));
+		}
+	}
+}
+
+
+void
 TextNode::render(vector<shared_ptr<Box>> &boxes)
 {
 	bool pushGlue = true;
@@ -23,34 +62,10 @@ TextNode::render(vector<shared_ptr<Box>> &boxes)
 
 	shared_ptr<Style> style = getStyle();
 
-
 	for (uint i = 0; i < text.length(); i++) {
 		if (text[i] != '-') {
-			if (dashCount > 0) {
-				if (dashCount == 1) { /* regular dash */
-					boxes.push_back(shared_ptr<Box>(
-						new Char(
-							text[i],
-							style->getFontFamily(),
-							style->getFontSize()
-						)
-					));
-				}
-				else if (dashCount == 2) { /* longer dash */
-					boxes.push_back(shared_ptr<Box>(
-						new Line(
-							7,
-							0,
-							-style->getFontSize() / 2
-						)
-					));
-				}
-				else { /* longest dash */
-
-				}
-
-				dashCount = 0;
-			}
+			writeDashes(boxes, dashCount);
+			dashCount = 0;
 		}
 
 		if (Parser::isWhiteChar(text[i])) {
@@ -85,4 +100,6 @@ TextNode::render(vector<shared_ptr<Box>> &boxes)
 			}
 		}
 	}
+
+	writeDashes(boxes, dashCount);
 }
