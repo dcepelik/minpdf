@@ -50,7 +50,7 @@ also carry semantic information about the content.}
 
 {p Content blocks are important for several reasons:}
 
-{list
+{nlist
 	{p They allow you to create documents that are easily processed by other
 	tools, because specific portions of the document, such as all headlines, are
 	easily extracted from the file using basic text-processing utilities.}
@@ -104,7 +104,7 @@ rebuilding! (No dependecies are set in the Makefile.)}
 
 {p The document is processed in the following steps:}
 
-{list
+{ilist
 	{p Input file is read and a DOM representation is built.}
 	{p From the DOM, box representation using rendering primitives is created.}
 	{p From the rendering primitives, PostScript code is produced.}

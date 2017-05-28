@@ -11,11 +11,21 @@ namespace DocumentModel
 {
 	namespace Elements
 	{
+		enum ItemListStyle
+		{
+			ItemListStyleUnordered,
+			ItemListStyleNumbered,
+			ItemListStyleRoman,
+		};
+
 		class ItemList : public Container
 		{
+			ItemListStyle style;
+
 		public:
-			ItemList(shared_ptr<Element> parent) : Container(parent, "item-list")
+			ItemList(shared_ptr<Element> parent, ItemListStyle style) : Container(parent, "item-list")
 			{
+				this->style = style;
 			}
 
 

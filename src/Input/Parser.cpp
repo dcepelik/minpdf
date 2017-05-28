@@ -116,7 +116,13 @@ Parser::parseElement(shared_ptr<Element> parent)
 		el = new Paragraph(parent, 400); /* TODO */
 	}
 	else if (name == "list") {
-		el = new ItemList(parent);
+		el = new ItemList(parent, ItemListStyleUnordered);
+	}
+	else if (name == "ilist") {
+		el = new ItemList(parent, ItemListStyleRoman);
+	}
+	else if (name == "nlist") {
+		el = new ItemList(parent, ItemListStyleNumbered);
 	}
 	else {
 		el = new DM::Elements::Container(parent, name);

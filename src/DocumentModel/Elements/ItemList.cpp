@@ -6,6 +6,38 @@
 using namespace DocumentModel::Elements;
 
 
+/*
+ * Taken from
+ * https://stackoverflow.com/questions/19266018/converting-integer-to-roman-numeral
+ */
+static string to_roman(unsigned int value)
+{
+    struct romandata_t { unsigned int value; char const* numeral; };
+    const struct romandata_t romandata[] =
+    {
+        {1000, "M"}, {900, "CM"},
+        {500, "D"}, {400, "CD"},
+        {100, "C"}, { 90, "XC"},
+        { 50, "L"}, { 40, "XL"},
+        { 10, "X"}, { 9, "IX"},
+        { 5, "V"}, { 4, "IV"},
+        { 1, "I"},
+        { 0, NULL} // end marker
+    };
+
+    std::string result;
+    for (const romandata_t* current = romandata; current->value > 0; ++current)
+    {
+        while (value >= current->value)
+        {
+            result += current->numeral;
+            value -= current->value;
+        }
+    }
+    return result;
+}
+
+
 void ItemList::render(vector<shared_ptr<Box>> &boxes)
 {
 	Paragraph *p;
@@ -18,14 +50,26 @@ void ItemList::render(vector<shared_ptr<Box>> &boxes)
 		if ((p = dynamic_cast<Paragraph *>(child.get()))) {
 			p->setMaxSize(getDocument()->getContentWidth() - itemIndent);
 
-			TextNode *bulletText = new TextNode(shared_ptr<Element>(this), to_string(i) + ")");
-			double bulletNatWidth = bulletText->getNaturalWidth();
+			string bulletText;
+			
+			if (style == ItemListStyleNumbered) {
+				bulletText = to_string(i) + ".";
+			}
+			else if (style == ItemListStyleUnordered) {
+				bulletText = "-";
+			}
+			else {
+				bulletText = to_roman(i) + ")";
+			}
+
+			TextNode *bulletTextNode = new TextNode(shared_ptr<Element>(this), bulletText);
+			double bulletNatWidth = bulletTextNode->getNaturalWidth();
 
 			vector<shared_ptr<Box>> pBoxes;
 			vector<shared_ptr<Box>> bulletBoxes;
 
 			p->render(pBoxes);
-			bulletText->render(bulletBoxes);
+			bulletTextNode->render(bulletBoxes);
 
 			if (pBoxes.size() == 0)
 				continue;
