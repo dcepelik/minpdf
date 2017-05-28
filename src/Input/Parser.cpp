@@ -4,22 +4,25 @@
 
 #include "DocumentModel/Elements/Paragraph.hpp"
 #include "DocumentModel/Elements/TextNode.hpp"
+#include "DocumentModel/Elements/ItemList.hpp"
+#include "DocumentModel/Elements/Commands/FilenameCommand.hpp"
+#include "DocumentModel/Elements/Commands/LineCommand.hpp"
 #include "ParseError.hpp"
 #include "Parser.hpp"
 
-using namespace DocumentModel::Elements;
-using namespace DocumentModel;
+using namespace DocumentModel::Elements::Commands;
 using namespace Input;
 using namespace std;
 
 
-shared_ptr<Document>
+shared_ptr<DM::Document>
 Parser::parseDocument()
 {
-	shared_ptr<Document> doc(new Document());
+	shared_ptr<DM::Document> doc(new DM::Document());
 	parseChildren(shared_ptr<Element>(doc));
 
 	doc->removeEmptyChildren();
+	doc->setFilename(filename);
 
 	return doc;
 }
@@ -46,8 +49,15 @@ Parser::parseChildren(shared_ptr<Element> parent)
 				break;
 
 			case Parser::ElementBegin:
-				processTextNode(parent);
-				parent->addChild(parseElement(parent));
+				stream.get(c);
+				if (c != '!') {
+					stream.unget();
+					processTextNode(parent);
+					parent->addChild(parseElement(parent));
+				}
+				else {
+					parent->addChild(parseCommand(parent));
+				}
 				break;
 
 			case Parser::ElementEnd:
@@ -67,6 +77,32 @@ Parser::parseChildren(shared_ptr<Element> parent)
 }
 
 
+
+shared_ptr<Element>
+Parser::parseCommand(shared_ptr<Element> parent)
+{
+	char c;
+
+	(void) parent;
+	string name = parseName();
+
+	stream.get(c);
+	if (c != Parser::ElementEnd) {
+		throw new ParseError("Parse error: missing } after command name");
+	}
+
+	if (name == "filename") {
+		return shared_ptr<Element>(new FilenameCommand(parent));
+	}
+	else if (name == "line") {
+		return shared_ptr<Element>(new LineCommand(parent));
+	}
+	else {
+		throw new ParseError("Parse error: unknown command");
+	}
+}
+
+
 shared_ptr<Element>
 Parser::parseElement(shared_ptr<Element> parent)
 {
@@ -79,8 +115,11 @@ Parser::parseElement(shared_ptr<Element> parent)
 	if (name == "p") {
 		el = new Paragraph(parent, 400); /* TODO */
 	}
+	else if (name == "list") {
+		el = new ItemList(parent);
+	}
 	else {
-		el = new DocumentModel::Elements::Container(parent, name);
+		el = new DM::Elements::Container(parent, name);
 	}
 
 	el->name = name;

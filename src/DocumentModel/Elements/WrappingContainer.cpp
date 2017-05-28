@@ -36,30 +36,18 @@ WrappingContainer::render(vector<shared_ptr<Box>> &boxes)
 		if (!dynamic_cast<Glue *>(begin.get()))
 			continue;
 
-		/*
-		cout << "Begin: ";
-		begin->dump(cout);
-		cout << endl;
-		*/
-
 		double sizeOfBoxes = 0;	/* current list size */
-		int listBadness;	/* current list badness */
-		int newBadness;		/* new badness (when dividing here) */
+		int listBadness;		/* current list badness */
+		int newBadness;			/* new badness (when dividing here) */
 
 		double glueSize = 0;	/* regular glue size */
 		double minGlueSize = 0;	/* glue size accounting for shrink */
 		double maxGlueSize = 0;	/* glue size accounting for stretch */
 		double actualGlueSize;	/* actual glue size (as rendered) */
-		double naturalSize;	/* natural size of the line */
+		double naturalSize;		/* natural size of the line */
 
 		for (auto itEnd = itBegin + 1; itEnd != inner.end(); itEnd++) {
 			auto end = (*itEnd);
-
-			/*
-			cout << "\tEnd: ";
-			end->dump(cout);
-			cout << endl;
-			*/
 
 			Glue *glue;
 			if ((glue = dynamic_cast<Glue *>(end.get()))) {
@@ -154,5 +142,6 @@ WrappingContainer::render(vector<shared_ptr<Box>> &boxes)
 	/*
 	 * append an infinitely-stretchable glue to the end of last list
 	 */
-	lastList->addChild(createNewInfGlue());
+	if (lastList)
+		lastList->addChild(createNewInfGlue());
 }

@@ -27,7 +27,7 @@ namespace DocumentModel
 
 			shared_ptr<Glue> createNewInterlineGlue()
 			{
-				return shared_ptr<Glue>(new VGlue(0, 3, 0, 0));
+				return shared_ptr<Glue>(new VGlue(0, 5, 0, 0));
 			}
 
 

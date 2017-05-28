@@ -7,8 +7,8 @@
 #include "DocumentModel/Document.hpp"
 #include "DocumentModel/Elements/Element.hpp"
 
-using namespace DocumentModel;
-using namespace DocumentModel::Elements;
+namespace DM = DocumentModel;
+using namespace DM::Elements;
 using namespace std;
 
 
@@ -18,11 +18,13 @@ namespace Input
 	{
 		istream &stream;
 		stringstream textbuf;
+		string filename;
 
 		Parser();
 
 		void parseChildren(shared_ptr<Element> parent);
 		shared_ptr<Element> parseElement(shared_ptr<Element> parent);
+		shared_ptr<Element> parseCommand(shared_ptr<Element> parent);
 		string parseName();
 		void processTextNode(shared_ptr<Element> parent);
 
@@ -51,12 +53,13 @@ namespace Input
 		}
 
 
-		Parser(istream &stream) : stream(stream)
+		Parser(istream &stream, string filename) : stream(stream)
 		{
 			textbuf = stringstream();
+			this->filename = filename;
 		}
 
 
-		shared_ptr<Document> parseDocument();
+		shared_ptr<DM::Document> parseDocument();
 	};
 }

@@ -29,6 +29,17 @@ namespace BoxModel
 		}
 
 
+		double getWidth()
+		{
+			return getActualSize();
+		}
+
+		virtual double getNaturalWidth()
+		{
+			return size;
+		}
+
+
 		void setActualSize(double size)
 		{
 			width = size;

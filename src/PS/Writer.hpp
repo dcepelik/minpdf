@@ -12,10 +12,24 @@ namespace PS
 		ostream &out;
 
 		const string EOL = "\r\n";
+		double x = 0;
+		double y = 0;
 
 	public:
 		Writer(ostream &out) : out(out)
 		{
+		}
+
+
+		double getX()
+		{
+			return x;
+		}
+
+
+		double getY()
+		{
+			return y;
 		}
 
 
@@ -25,15 +39,11 @@ namespace PS
 		}
 
 
-		//void writeTd(int x, int y)
-		//{
-		//	out << x << " " << y << " Td" << EOL;
-		//}
-
-
 		void writeTd(double x, double y)
 		{
 			out << x << " " << y << " Td" << EOL;
+			this->x += x;
+			this->y += y;
 		}
 
 

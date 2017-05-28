@@ -25,11 +25,17 @@ namespace BoxModel
 	public:
 		HList(int maxSize) : List(maxSize)
 		{
-			this->height = 0; /* TODO */
+			this->height = 0;
 		}
 
 
-		double getHeight()
+		virtual double getWidth()
+		{
+			return maxSize;
+		}
+
+
+		virtual double getHeight()
 		{
 			double maxHeight = 0;
 			for (auto child: children) {
@@ -53,13 +59,9 @@ namespace BoxModel
 
 		void writePSOutput(PS::Writer &writer)
 		{
-			double sink = 0.3; /* TODO */
-
 			divideSpaces();
-
-			writer.writeTd(0, -getHeight() * (1 - sink));
 			List::writePSOutput(writer);
-			writer.writeTd(-getMaxListSize(), -getHeight() * sink);
+			writer.writeTd(-getMaxListSize(), -getHeight());
 		}
 	};
 }

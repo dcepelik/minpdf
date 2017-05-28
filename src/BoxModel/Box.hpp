@@ -18,7 +18,7 @@ namespace BoxModel
 		double width;
 		double height;
 
-		int badness = 1e4;		/* cost when breaking here */
+		int badness = 1e4;			/* cost when breaking here */
 		shared_ptr<Box> prev;		/* previous division point */
 
 	public:
@@ -33,14 +33,19 @@ namespace BoxModel
 		virtual void writePSOutput(PS::Writer &writer) = 0;
 
 
-		double getWidth()
+		virtual double getWidth()
 		{
 			return width;
 		}
 
-		double getHeight()
+		virtual double getHeight()
 		{
 			return height;
+		}
+
+		virtual double getNaturalWidth()
+		{
+			return width;
 		}
 
 		int getBadness()

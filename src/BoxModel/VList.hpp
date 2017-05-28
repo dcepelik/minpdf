@@ -2,6 +2,8 @@
 
 #include "List.hpp"
 
+#include <cassert>
+
 using namespace std;
 
 
@@ -28,6 +30,23 @@ namespace BoxModel
 		}
 
 
+		virtual double getWidth()
+		{
+			double maxWidth = 0;
+			for (auto child: children) {
+				maxWidth = max(maxWidth, child->getWidth());
+			}
+
+			return maxWidth;
+		}
+
+
+		virtual double getHeight()
+		{
+			return maxSize;
+		}
+
+
 		void dump(ostream &out, int level)
 		{
 			out << string(level, '\t') << "^^[" << endl;
@@ -44,7 +63,7 @@ namespace BoxModel
 			divideSpaces();
 
 			List::writePSOutput(writer);
-			writer.writeTd(-612, -getMaxListSize());
+			//writer.writeTd(-612, -getMaxListSize());
 		}
 	};
 }

@@ -16,8 +16,15 @@ namespace DocumentModel
 	{
 		shared_ptr<StyleTable> styleTable;
 
+		int pageWidth = 594;
+		int pageHeight = 842;
+		int contentWidth = pageWidth - 194;
+		string filename;
+
+		void prerender(vector<shared_ptr<Box>> &boxes);
+
 	public:
-		Document() : VWrappingContainer(shared_ptr<Element>(NULL), "document", 842.25 - 300) /* TODO */
+		Document() : VWrappingContainer(shared_ptr<Element>(NULL), "document", (842.25 - 300)) /* TODO */
 		{
 		}
 
@@ -25,6 +32,24 @@ namespace DocumentModel
 		void setStyleTable(shared_ptr<StyleTable> styleTable)
 		{
 			this->styleTable = styleTable;
+		}
+
+
+		int getContentWidth()
+		{
+			return this->contentWidth;
+		}
+
+
+		string getFilename()
+		{
+			return filename;
+		}
+
+
+		void setFilename(string filename)
+		{
+			this->filename = filename;
 		}
 
 

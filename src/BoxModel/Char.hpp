@@ -86,7 +86,10 @@ namespace BoxModel
 				charWidths['\''] = 1.5;
 				charWidths[','] = 1.5;
 				charWidths['+'] = 6.3;
+				charWidths['-'] = 4;
 				charWidths['.'] = 2;
+				charWidths['('] = 3;
+				charWidths[')'] = 3;
 
 				if (fontFamily == "/F3") {
 					for (size_t i = 0; i < charWidths.size(); i++)
@@ -100,6 +103,9 @@ namespace BoxModel
 					charWidths['r'] += 0.5;
 					charWidths['A'] -= 0.3;
 					charWidths['U'] -= 0.5;
+				}
+				else if (fontFamily == "/F4") {
+					charWidths['f'] += 0.5;
 				}
 			}
 
@@ -117,9 +123,17 @@ namespace BoxModel
 
 		void writePSOutput(PS::Writer &writer)
 		{	
+			double sink = 0.7; /* TODO */
+
+			string theChar = string(1, c);
+			if (c == '(' || c == ')' || c == '\\') {
+				theChar = "\\" + theChar;
+			}
+
+			writer.writeTd(0, -getHeight() * sink);
 			writer.writeTf(fontFamily, fontSize);
-			writer.writeTj(string(1, c));
-			writer.writeTd(this->width, 0);
+			writer.writeTj(theChar);
+			writer.writeTd(this->width, getHeight() * sink);
 		}
 	};
 }

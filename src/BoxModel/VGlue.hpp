@@ -26,6 +26,12 @@ namespace BoxModel
 		}
 
 
+		double getHeight()
+		{
+			return height;
+		}
+
+
 		void dump(ostream &out, int level)
 		{
 			out << string(level, '\t') << '^' << cardinality << '^' << endl;

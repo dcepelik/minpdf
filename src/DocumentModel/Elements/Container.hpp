@@ -22,6 +22,19 @@ namespace DocumentModel
 			string name;
 			vector<shared_ptr<Element>> children;
 
+
+			virtual void prerender(vector<shared_ptr<Box>> &boxes)
+			{
+				(void) boxes;
+			}
+
+
+			virtual void postrender(vector<shared_ptr<Box>> &boxes)
+			{
+				(void) boxes;
+			}
+
+
 		public:
 			Container(shared_ptr<Element> parent, string name)
 				: Element(parent, name)
@@ -35,11 +48,34 @@ namespace DocumentModel
 			}
 
 
+			virtual void getChildrenRecursive(vector<shared_ptr<Element>> &children)
+			{
+				for (auto child: this->children) {
+					children.push_back(child);
+					child->getChildrenRecursive(children);
+				}
+			}
+
+
+			virtual string getTextualContent()
+			{
+				/* TODO don't be so wasteful, use a string builder instead! */
+
+				string str;
+				for (auto child: children) {
+					str += child->getTextualContent();
+				}
+
+				return str;
+			}
+
+
 			virtual void render(vector<shared_ptr<Box>> &boxes)
 			{
-				for (auto it = children.begin(); it != children.end(); it++) {
+				prerender(boxes);
+				for (auto it = children.begin(); it != children.end(); it++)
 					(*it)->render(boxes);
-				}
+				postrender(boxes);
 			}
 
 

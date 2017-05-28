@@ -42,6 +42,26 @@ namespace DocumentModel
 			}
 
 
+			double getNaturalWidth()
+			{
+				vector<shared_ptr<Box>> boxes;
+				double width = 0;
+
+				this->render(boxes);
+
+				for (auto box: boxes)
+					width += box->getNaturalWidth();
+
+				return width;
+			}
+
+
+			string getTextualContent()
+			{
+				return text;
+			}
+
+
 			bool empty()
 			{
 				for (uint i = 0; i < text.length(); i++) {

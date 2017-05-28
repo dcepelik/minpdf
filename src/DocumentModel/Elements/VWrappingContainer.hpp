@@ -40,13 +40,13 @@ namespace DocumentModel
 
 			shared_ptr<Glue> createNewInterlineGlue()
 			{
-				return shared_ptr<Glue>(new VGlue(0, 0, 0, 0));
+				return shared_ptr<Glue>(new VGlue(0, 3, 0, 0));
 			}
 
 		public:
 			VWrappingContainer(shared_ptr<Element> parent,
-				string name, int width)
-				: WrappingContainer(parent, name, width)
+				string name, int height)
+				: WrappingContainer(parent, name, height)
 			{
 			};
 

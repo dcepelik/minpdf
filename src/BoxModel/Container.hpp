@@ -15,6 +15,7 @@ namespace BoxModel
 		/* my software protects the children */
 		vector<shared_ptr<Box>> children;
 
+
 	public:
 		Container() : Box(0, 0)
 		{
@@ -24,6 +25,18 @@ namespace BoxModel
 		void addChild(shared_ptr<Box> child)
 		{
 			children.push_back(child);
+		}
+
+
+		void prependChild(shared_ptr<Box> child)
+		{
+			children.insert(children.begin(), child);
+		}
+
+
+		void prependChildren(vector<shared_ptr<Box>> &children)
+		{
+			this->children.insert(this->children.begin(), children.begin(), children.end());
 		}
 
 

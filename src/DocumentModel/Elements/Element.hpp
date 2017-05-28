@@ -48,10 +48,22 @@ namespace DocumentModel
 			}
 
 
+			virtual void getChildrenRecursive(vector<shared_ptr<Element>> &children)
+			{
+				(void) children;
+			}
+
+
+			virtual string getTextualContent()
+			{
+				return "";
+			}
+
+
 			virtual void render(vector<shared_ptr<Box>> &boxes)
 			{
 				/* by default, element will not produce any boxes */
-				(void)boxes;
+				(void) boxes;
 			}
 
 

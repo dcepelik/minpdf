@@ -42,7 +42,7 @@ main(int argc, char *argv[]) {
 	/* @todo ofs? */
 
 	istream stream(&buf);
-	Parser p(stream);
+	Parser p(stream, input_fn);
 	shared_ptr<DocumentModel::Document> doc = p.parseDocument();
 	buf.close();
 
@@ -62,7 +62,9 @@ main(int argc, char *argv[]) {
 
 	for (int i = 1; i <= 3; i++) {
 		unique_ptr<Style> headlineStyle(new Style());
-		headlineStyle->setFontSize(20 - 5 * (i - 1) + i);
+		headlineStyle->setFontSize(20 - 5 * (i - 1));
+		if (i >= 3)
+			headlineStyle->setFontFamily("/F3");
 		table->addStyle(to_string(i), move(headlineStyle));
 	}
 

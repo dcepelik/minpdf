@@ -35,6 +35,11 @@ namespace DocumentModel
 
 
 			void render(vector<shared_ptr<Box>> &boxes);
+
+			void setMaxSize(int maxSize)
+			{
+				this->maxSize = maxSize;
+			}
 		};
 	}
 }
